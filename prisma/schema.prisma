@@ -1,0 +1,279 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+  DOCTOR
+}
+
+enum Services_Category {
+  DIAGNOSTICS
+  TREATMENT
+  ANALYSIS
+}
+
+enum Status {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum Position {
+  TOP
+  SIDEBAR
+  FOOTER
+}
+
+model Region {
+  id   String @id @default(ulid())
+  name String
+
+  users   User[]
+  clinics Clinics[]
+
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id         String @id @default(ulid())
+  name       String
+  surname    String
+  phone      String @unique
+  email      String @unique
+  password   Int
+  avatar_url String
+  role       Role
+
+  doctors      Doctors[]
+  appointments Appointments[]
+  reviews      Reviews[]
+  articles     Articles[]
+
+  regionId String?
+  Region   Region? @relation(fields: [regionId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Clinics {
+  id            String @id @default(ulid())
+  name          String
+  description   String
+  address       String
+  phone         String
+  email         String
+  website       String
+  opening_hours Json //{"mon":"08:00-20:00","tue":"08:00-20:00"}
+  logo_url      String
+
+  doctors        Doctors[]
+  clinicservices ClinicServices[]
+  appointments   Appointments[]
+  reviews        Reviews[]
+  promotions     Promotions[]
+
+  regionId String?
+  Region   Region? @relation(fields: [regionId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Specialties {
+  id   String @id @default(ulid())
+  name String //masalan: kardiolog, oftalmolog, stomatolog
+
+  doctors Doctors[]
+
+  createdAt DateTime @default(now())
+}
+
+model Doctors {
+  id               String  @id @default(ulid())
+  bio              String
+  experience_years Int
+  rating           Decimal @default(0)
+  image_url        String
+
+  appointments Appointments[]
+  reviews      Reviews[]
+
+  userId        String?
+  User          User?        @relation(fields: [userId], references: [id])
+  clinicsId     String?
+  Clinics       Clinics?     @relation(fields: [clinicsId], references: [id])
+  specialtiesId String?
+  Specialties   Specialties? @relation(fields: [specialtiesId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Services {
+  id          String            @id @default(ulid())
+  name        String
+  description String
+  category    Services_Category
+  image_url   String
+
+  clinicservices ClinicServices[]
+
+  createdAt DateTime @default(now())
+}
+
+model ClinicServices {
+  id               String  @id @default(ulid())
+  price            Decimal
+  duration_minutes Int
+
+  clinicsId  String?
+  Clinics    Clinics?  @relation(fields: [clinicsId], references: [id])
+  servicesId String?
+  Services   Services? @relation(fields: [servicesId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Appointments {
+  id               String   @id @default(ulid())
+  appointment_date DateTime
+  status           Status
+  notes            String
+
+  userId    String?
+  User      User?    @relation(fields: [userId], references: [id])
+  clinicsId String?
+  Clinics   Clinics? @relation(fields: [clinicsId], references: [id])
+  doctorsId String?
+  Doctors   Doctors? @relation(fields: [doctorsId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Reviews {
+  id      String @id @default(ulid())
+  rating  Int
+  comment String
+
+  userId    String?
+  User      User?    @relation(fields: [userId], references: [id])
+  clinicsId String?
+  Clinics   Clinics? @relation(fields: [clinicsId], references: [id])
+  doctorsId String?
+  Doctors   Doctors? @relation(fields: [doctorsId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Articles {
+  id        String @id @default(ulid())
+  title     String
+  content   String
+  image_url String
+
+  userId String?
+  User   User?   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Promotions {
+  id               String @id @default(ulid())
+  title            String
+  description      String
+  discount_percent Int
+
+  clinicsId String?
+  Clinics   Clinics? @relation(fields: [clinicsId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Banners {
+  id        String   @id @default(ulid())
+  image_url String
+  link_url  String
+  position  Position
+  active    Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+}
+
+model FAQ {
+  id       String @id @default(ulid())
+  question String
+  answer   String
+
+  createdAt DateTime @default(now())
+}
+
+model Contacts {
+  id      String @id @default(ulid())
+  name    String
+  phone   String
+  email   String
+  message String
+
+  createdAt DateTime @default(now())
+}
+
+model Medications {
+  id                    String  @id @default(ulid())
+  name                  String
+  description           String
+  composition           String
+  manufacturer          String
+  country               String
+  image_url             String
+  prescription_required Boolean @default(true)
+
+  medicationprices MedicationPrices[]
+
+  medicationCategoriesId String?
+  MedicationCategories   MedicationCategories? @relation(fields: [medicationCategoriesId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model MedicationCategories {
+  id          String @id @default(ulid())
+  name        String
+  description String
+
+  medications Medications[]
+
+  createdAt DateTime @default(now())
+}
+
+model MedicationPrices {
+  id        String  @id @default(ulid())
+  price     Decimal
+  available Boolean @default(true)
+
+  medicationsId String?
+  Medications   Medications? @relation(fields: [medicationsId], references: [id])
+  pharmaciesId  String?
+  Pharmacies    Pharmacies?  @relation(fields: [pharmaciesId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Pharmacies {
+  id            String @id @default(ulid())
+  name          String
+  address       String
+  phone         String
+  website       String
+  opening_hours Json
+
+  medicationprices MedicationPrices[]
+
+  createdAt DateTime @default(now())
+}
