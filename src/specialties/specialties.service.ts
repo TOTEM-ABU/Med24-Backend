@@ -1,26 +1,135 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
+import { PrismaService } from 'src/tools/prisma/prisma.service';
 import { CreateSpecialtyDto } from './dto/create-specialty.dto';
 import { UpdateSpecialtyDto } from './dto/update-specialty.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class SpecialtiesService {
-  create(createSpecialtyDto: CreateSpecialtyDto) {
-    return 'This action adds a new specialty';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createSpecialtyDto: CreateSpecialtyDto) {
+    try {
+      return await this.prisma.specialties.create({
+        data: createSpecialtyDto,
+      });
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'Specialty create failed!',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
-  findAll() {
-    return `This action returns all specialties`;
+  async findAll(params: {
+    search?: string;
+    sort?: 'asc' | 'desc';
+    sortBy?: 'name';
+    page?: number;
+    limit?: number;
+  }) {
+    const {
+      search,
+      sort = 'asc',
+      sortBy = 'name',
+      page = 1,
+      limit = 10,
+    } = params;
+
+    const where: Prisma.SpecialtiesWhereInput = search
+      ? {
+          name: {
+            contains: search,
+            mode: Prisma.QueryMode.insensitive,
+          },
+        }
+      : {};
+
+    try {
+      const [data, total] = await Promise.all([
+        this.prisma.specialties.findMany({
+          where,
+          orderBy: { [sortBy]: sort },
+          skip: (page - 1) * limit,
+          take: limit,
+        }),
+        this.prisma.specialties.count({ where }),
+      ]);
+
+      return {
+        data,
+        total,
+        page,
+        lastPage: Math.ceil(total / limit),
+      };
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new BadRequestException('Specialties fetch failed!');
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} specialty`;
+  async findOne(id: string) {
+    try {
+      const specialty = await this.prisma.specialties.findUnique({
+        where: { id },
+      });
+      if (!specialty) {
+        throw new HttpException('Specialty not found!', HttpStatus.NOT_FOUND);
+      }
+      return specialty;
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'Specialty fetch one failed!',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  update(id: number, updateSpecialtyDto: UpdateSpecialtyDto) {
-    return `This action updates a #${id} specialty`;
+  async update(id: string, updateSpecialtyDto: UpdateSpecialtyDto) {
+    const existing = await this.prisma.specialties.findUnique({
+      where: { id },
+    });
+    if (!existing) {
+      throw new HttpException('Specialty not found!', HttpStatus.NOT_FOUND);
+    }
+
+    try {
+      return await this.prisma.specialties.update({
+        where: { id },
+        data: updateSpecialtyDto,
+      });
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'Specialty update failed!',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} specialty`;
+  async remove(id: string) {
+    const existing = await this.prisma.specialties.findUnique({
+      where: { id },
+    });
+    if (!existing) {
+      throw new HttpException('Specialty not found!', HttpStatus.NOT_FOUND);
+    }
+
+    try {
+      return await this.prisma.specialties.delete({ where: { id } });
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'Specialty delete failed!',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
