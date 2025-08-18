@@ -17,7 +17,7 @@ import { AuthGuard } from 'src/tools/guards/auth/auth.guard';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { Request } from 'express';
-import { Role } from 'generated/prisma';
+import { Role } from '@prisma/client';
 import { UpdateArticleDto } from './dto/update-article.dto';
 
 @Controller('articles')
