@@ -7,16 +7,24 @@ import {
 	Param,
 	Delete,
 	Query,
+	UseGuards,
 } from '@nestjs/common';
 import { ApiQuery } from '@nestjs/swagger';
 import { MedicationsService } from './medications.service';
 import { CreateMedicationDto } from './dto/create-medication.dto';
 import { UpdateMedicationDto } from './dto/update-medication.dto';
+import { Roles } from 'src/tools/decorators/roles.decorators';
+import { Role } from '@prisma/client';
+import { RoleGuard } from 'src/tools/guards/role/role.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('medications')
 export class MedicationsController {
-	constructor(private readonly medicationsService: MedicationsService) {}
+	constructor(private readonly medicationsService: MedicationsService) { }
 
+	@Roles(Role.ADMIN)
+	@UseGuards(RoleGuard)
+	@UseGuards(AuthGuard)
 	@Post()
 	create(@Body() createMedicationDto: CreateMedicationDto) {
 		return this.medicationsService.create(createMedicationDto);
@@ -58,11 +66,17 @@ export class MedicationsController {
 		return this.medicationsService.findOne(id);
 	}
 
+	@Roles(Role.ADMIN)
+	@UseGuards(RoleGuard)
+	@UseGuards(AuthGuard)
 	@Patch(':id')
 	update(@Param('id') id: string, @Body() updateMedicationDto: UpdateMedicationDto) {
 		return this.medicationsService.update(id, updateMedicationDto);
 	}
 
+	@Roles(Role.ADMIN)
+	@UseGuards(RoleGuard)
+	@UseGuards(AuthGuard)
 	@Delete(':id')
 	remove(@Param('id') id: string) {
 		return this.medicationsService.remove(id);
