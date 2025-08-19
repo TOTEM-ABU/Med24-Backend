@@ -24,8 +24,7 @@ export class ContactsController {
   constructor(private readonly contactsService: ContactsService) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard)
-  @UseGuards(AuthGuard)
+  @UseGuards(RoleGuard, AuthGuard)
   @Post()
   create(@Body() createContactDto: CreateContactDto) {
     return this.contactsService.create(createContactDto);
@@ -63,11 +62,15 @@ export class ContactsController {
     return this.contactsService.findOne(id);
   }
 
+  @Roles(Role.ADMIN)
+  @UseGuards(RoleGuard, AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateContactDto: UpdateContactDto) {
     return this.contactsService.update(id, updateContactDto);
   }
 
+  @Roles(Role.ADMIN)
+  @UseGuards(RoleGuard, AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.contactsService.remove(id);

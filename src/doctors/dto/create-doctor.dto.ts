@@ -37,7 +37,6 @@ export class CreateDoctorDto {
   @IsString()
   image_url: string;
 
-
   @ApiPropertyOptional({
     description: 'Clinic ID',
     example: 'clinic_456',

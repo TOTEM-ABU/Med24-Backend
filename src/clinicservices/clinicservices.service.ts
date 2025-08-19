@@ -71,6 +71,10 @@ export class ClinicservicesService {
           orderBy: { [sortBy]: sort },
           skip: (page - 1) * limit,
           take: limit,
+          include: {
+            Clinics: true,
+            Services: true,
+          },
         }),
         this.prisma.clinicServices.count({ where }),
       ]);

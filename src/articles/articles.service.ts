@@ -76,6 +76,9 @@ export class ArticlesService {
         },
         skip,
         take,
+        include: {
+          User: true,
+        },
       });
 
       const total = await this.prisma.articles.count({ where });

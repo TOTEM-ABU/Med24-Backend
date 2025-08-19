@@ -22,8 +22,8 @@ import { Role } from '@prisma/client';
 export class ClinicsController {
   constructor(private readonly clinicsService: ClinicsService) {}
 
-  // @Roles(Role.ADMIN)
-  // @UseGuards(RoleGuard, AuthGuard)
+  @Roles(Role.ADMIN)
+  @UseGuards(RoleGuard, AuthGuard)
   @Post()
   create(@Body() data: CreateClinicDto) {
     return this.clinicsService.create(data);

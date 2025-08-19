@@ -15,8 +15,8 @@ import { UpdateMedicationcategoryDto } from './dto/update-medicationcategory.dto
 import { ApiQuery } from '@nestjs/swagger';
 import { Roles } from 'src/tools/decorators/roles.decorators';
 import { RoleGuard } from 'src/tools/guards/role/role.guard';
-import { AuthGuard } from '@nestjs/passport';
 import { Role } from '@prisma/client';
+import { AuthGuard } from 'src/tools/guards/auth/auth.guard';
 
 @Controller('medicationcategories')
 export class MedicationcategoriesController {
@@ -24,9 +24,8 @@ export class MedicationcategoriesController {
     private readonly medicationcategoriesService: MedicationcategoriesService,
   ) {}
 
-    @Roles(Role.ADMIN)
-    @UseGuards(RoleGuard)
-    @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
+  @UseGuards(RoleGuard, AuthGuard)
   @Post()
   create(@Body() createMedicationcategoryDto: CreateMedicationcategoryDto) {
     return this.medicationcategoriesService.create(createMedicationcategoryDto);
@@ -64,9 +63,8 @@ export class MedicationcategoriesController {
     return this.medicationcategoriesService.findOne(id);
   }
 
-    @Roles(Role.ADMIN)
-    @UseGuards(RoleGuard)
-    @UseGuards(AuthGuard)
+  @Roles(Role.ADMIN)
+  @UseGuards(RoleGuard, AuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -77,9 +75,9 @@ export class MedicationcategoriesController {
       updateMedicationcategoryDto,
     );
   }
+
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard)
-  @UseGuards(AuthGuard)
+  @UseGuards(RoleGuard, AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.medicationcategoriesService.remove(id);

@@ -1,7 +1,13 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/tools/prisma/prisma.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ReviewsService {
@@ -10,7 +16,6 @@ export class ReviewsService {
   async create(createReviewDto: CreateReviewDto) {
     const { userId, doctorsId, clinicsId } = createReviewDto;
 
-    // optional: user bir marta review qilsin deb tekshirish
     const exists = await this.prisma.reviews.findFirst({
       where: { userId, doctorsId, clinicsId },
     });
@@ -29,16 +34,64 @@ export class ReviewsService {
     };
   }
 
-  async findAll() {
-    const reviews = await this.prisma.reviews.findMany({
-      include: {
-        User: true,
-        Clinics: true,
-        Doctors: true,
-      },
-    });
+  async findAll(query: {
+    rating?: number;
+    userId?: string;
+    doctorsId?: string;
+    clinicsId?: string;
+    sort?: 'asc' | 'desc';
+    sortBy?: 'rating' | 'createdAt';
+    page?: number;
+    limit?: number;
+  }) {
+    try {
+      const {
+        rating,
+        userId,
+        doctorsId,
+        clinicsId,
+        sort = 'desc',
+        sortBy = 'createdAt',
+        page = 1,
+        limit = 10,
+      } = query;
 
-    return { data: reviews };
+      const take = Number(limit);
+      const skip = (Number(page) - 1) * take;
+
+      const where: Prisma.ReviewsWhereInput = {
+        ...(rating && { rating }),
+        ...(userId && { userId }),
+        ...(doctorsId && { doctorsId }),
+        ...(clinicsId && { clinicsId }),
+      };
+
+      const reviews = await this.prisma.reviews.findMany({
+        where,
+        orderBy: { [sortBy]: sort },
+        skip,
+        take,
+        include: {
+          User: true,
+          Clinics: true,
+          Doctors: true,
+        },
+      });
+
+      const total = await this.prisma.reviews.count({ where });
+
+      return {
+        data: reviews,
+        meta: {
+          total,
+          page: Number(page),
+          limit: take,
+          lastPage: Math.ceil(total / take),
+        },
+      };
+    } catch (error) {
+      throw new BadRequestException('Reviews fetch failed!');
+    }
   }
 
   async findOne(id: string) {
@@ -65,9 +118,7 @@ export class ReviewsService {
 
     await this.prisma.reviews.delete({ where: { id } });
 
-    return {
-      message: 'Review removed successfully!',
-    };
+    return { message: 'Review removed successfully!' };
   }
 
   async #findReview(id: string) {

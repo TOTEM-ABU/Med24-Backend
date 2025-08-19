@@ -24,8 +24,7 @@ export class ClinicservicesController {
   constructor(private readonly clinicservicesService: ClinicservicesService) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard)
-  @UseGuards(AuthGuard)
+  @UseGuards(RoleGuard, AuthGuard)
   @Post()
   create(@Body() createClinicserviceDto: CreateClinicserviceDto) {
     return this.clinicservicesService.create(createClinicserviceDto);
@@ -77,8 +76,7 @@ export class ClinicservicesController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard)
-  @UseGuards(AuthGuard)
+  @UseGuards(RoleGuard, AuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -88,8 +86,7 @@ export class ClinicservicesController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard)
-  @UseGuards(AuthGuard)
+  @UseGuards(RoleGuard, AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.clinicservicesService.remove(id);

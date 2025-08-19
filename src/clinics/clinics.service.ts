@@ -78,6 +78,11 @@ export class ClinicsService {
         take,
         include: {
           Region: true,
+          doctors: true,
+          clinicservices: true,
+          appointments: true,
+          reviews: true,
+          promotions: true,
         },
       });
 

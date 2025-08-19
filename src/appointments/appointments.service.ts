@@ -1,73 +1,163 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { PrismaService } from 'src/tools/prisma/prisma.service';
 
 @Injectable()
 export class AppointmentsService {
-  constructor(private prisma: PrismaService) {}
-  async create(createAppointmentDto: CreateAppointmentDto) {
-    const {appointment_date, userId, doctorsId} = createAppointmentDto
+  constructor(private readonly prisma: PrismaService) {}
 
-    const appointment = await this.prisma.appointments.findFirst({where: {appointment_date, userId, doctorsId}})
+  async create(data: CreateAppointmentDto) {
+    const { appointment_date, userId, doctorsId } = data;
 
-    if(appointment) {
-      throw new ConflictException("Appointment already exists!")
+    const existing = await this.prisma.appointments.findFirst({
+      where: { appointment_date, userId, doctorsId },
+    });
+
+    if (existing) {
+      throw new ConflictException('This appointment already exists!');
     }
 
-    const createdAppointment = await this.prisma.appointments.create({data: createAppointmentDto as any})
-
-    return {
-      message: "Appoitment created  successfully!",
-      data: createdAppointment
+    try {
+      const appointment = await this.prisma.appointments.create({ data });
+      return appointment;
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'Appointment create failed!',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
-  async findAll() {
+  async findAll(query: {
+    status?: string;
+    userId?: string;
+    clinicsId?: string;
+    doctorsId?: string;
+    appointment_date?: string;
+    sort?: 'asc' | 'desc';
+    sortBy?: 'appointment_date' | 'status';
+    page?: number;
+    limit?: number;
+  }) {
+    try {
+      const {
+        status,
+        userId,
+        clinicsId,
+        doctorsId,
+        appointment_date,
+        sort = 'asc',
+        sortBy = 'appointment_date',
+        page = 1,
+        limit = 10,
+      } = query;
 
-    const appointments = await this.prisma.appointments.findMany()
+      const take = Number(limit);
+      const skip = (Number(page) - 1) * take;
 
-    return {
-      data: appointments
-    };
+      const where: any = {};
+      if (status) where.status = status;
+      if (userId) where.userId = userId;
+      if (clinicsId) where.clinicsId = clinicsId;
+      if (doctorsId) where.doctorsId = doctorsId;
+      if (appointment_date) where.appointment_date = new Date(appointment_date);
+
+      const appointments = await this.prisma.appointments.findMany({
+        where,
+        orderBy: { [sortBy]: sort },
+        skip,
+        take,
+        include: {
+          User: true,
+          Doctors: true,
+          Clinics: true,
+        },
+      });
+
+      const total = await this.prisma.appointments.count({ where });
+
+      return {
+        data: appointments,
+        meta: {
+          total,
+          page: Number(page),
+          limit: take,
+          lastPage: Math.ceil(total / take),
+        },
+      };
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new BadRequestException('Appointments fetch all failed!');
+    }
   }
 
   async findOne(id: string) {
-    const data = await this.#findAppointment(id)
+    const appointment = await this.prisma.appointments.findUnique({
+      where: { id },
+    });
 
-    return {
-      data: data
+    if (!appointment) {
+      throw new NotFoundException('Appointment not found!');
     }
+
+    return appointment;
   }
 
-  async update(id: string, updateAppointmentDto: UpdateAppointmentDto) {
-    await this.#findAppointment(id)
+  async update(id: string, data: UpdateAppointmentDto) {
+    const existing = await this.prisma.appointments.findUnique({
+      where: { id },
+    });
 
-    const upadtedAppointment = await this.prisma.appointments.update({where: {id: id}, data: updateAppointmentDto as any})
+    if (!existing) {
+      throw new NotFoundException('Appointment not found!');
+    }
 
-    return {
-      message: "Appointment successfully updated!",
-      data: upadtedAppointment
+    try {
+      const updated = await this.prisma.appointments.update({
+        where: { id },
+        data,
+      });
+
+      return updated;
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'Appointment update failed!',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
   async remove(id: string) {
-    await this.#findAppointment(id)
+    const existing = await this.prisma.appointments.findUnique({
+      where: { id },
+    });
 
-    await this.prisma.appointments.delete({where: {id: id}})
-
-    return {
-      message: "Appointment removed successfully!"
-    }
-  }
-
-  async  #findAppointment(id: string) {
-    const appointment = await this.prisma.appointments.findUnique({where: {id: id}})
-
-    if(appointment) {
-      throw new NotFoundException("Appointment not found!")
+    if (!existing) {
+      throw new NotFoundException('Appointment not found!');
     }
 
-    return appointment
+    try {
+      const deleted = await this.prisma.appointments.delete({
+        where: { id },
+      });
+
+      return deleted;
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(
+        'Appointment delete failed!',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }

@@ -46,7 +46,17 @@ export class UserService {
       : { createdAt: 'desc' };
 
     const [items, total] = await this.prisma.$transaction([
-      this.prisma.user.findMany({ where, skip, take: +limit, orderBy }),
+      this.prisma.user.findMany({
+        where,
+        skip,
+        take: +limit,
+        orderBy,
+        include: {
+          appointments: true,
+          reviews: true,
+          articles: true,
+        },
+      }),
       this.prisma.user.count({ where }),
     ]);
 

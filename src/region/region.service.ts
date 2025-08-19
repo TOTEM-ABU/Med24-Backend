@@ -56,6 +56,9 @@ export class RegionService {
         orderBy: { name: sort },
         skip,
         take,
+        include: {
+          clinics: true,
+        },
       });
 
       const total = await this.prisma.region.count({ where });
