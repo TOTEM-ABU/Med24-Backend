@@ -64,7 +64,6 @@ export class AuthService {
     return { access_token: token };
   }
 
-  // Send OTP to email
   async sendOtp(email: string) {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const expires = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
