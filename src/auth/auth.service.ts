@@ -12,7 +12,6 @@ import { RegisterDto } from './dtos/register.dto';
 import { LoginDto } from './dtos/login.dto';
 import { OtpDto } from './dtos/otp.dto';
 
-// In-memory OTP storage
 const otpStore: Record<string, { code: string; expires: Date }> = {};
 
 @Injectable()
@@ -23,7 +22,6 @@ export class AuthService {
     private mailService: MailService,
   ) {}
 
-  // Register a new user
   async register(dto: RegisterDto) {
     const exist = await this.prisma.user.findUnique({
       where: { email: dto.email },
@@ -48,7 +46,6 @@ export class AuthService {
     return { message: 'Registered successfully', userId: user.id };
   }
 
-  // User login
   async login(dto: LoginDto) {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },
@@ -64,15 +61,12 @@ export class AuthService {
     return { access_token: token };
   }
 
-  // Send OTP to email
   async sendOtp(email: string) {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expires = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes
+    const expires = new Date(Date.now() + 5 * 60 * 1000);
 
-    // Store OTP in memory
     otpStore[email] = { code: otp, expires };
 
-    // Send OTP via email using MailService
     const result = await this.mailService.sendMail(
       email,
       'Sizning OTP kodingiz!',
