@@ -10,7 +10,6 @@ datasource db {
 enum Role {
   ADMIN
   USER
-  DOCTOR
 }
 
 enum Services_Category {
@@ -52,7 +51,6 @@ model User {
   avatar_url String
   role       Role
 
-  doctors      Doctors[]
   appointments Appointments[]
   reviews      Reviews[]
   articles     Articles[]
@@ -105,8 +103,6 @@ model Doctors {
   appointments Appointments[]
   reviews      Reviews[]
 
-  userId        String?
-  User          User?        @relation(fields: [userId], references: [id])
   clinicsId     String?
   Clinics       Clinics?     @relation(fields: [clinicsId], references: [id])
   specialtiesId String?
