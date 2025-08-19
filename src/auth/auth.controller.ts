@@ -4,10 +4,7 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dtos/register.dto';
 import { LoginDto } from './dtos/login.dto';
 import { OtpDto } from './dtos/otp.dto';
-
-class SendOtpDto {
-  email: string;
-}
+import { SendOtpDto } from './dtos/send-otp.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -16,6 +13,7 @@ export class AuthController {
 
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
+  @ApiBody({ type: RegisterDto })
   @ApiResponse({ status: 201, description: 'User registered successfully' })
   @ApiResponse({ status: 400, description: 'User already exists' })
   register(@Body() dto: RegisterDto) {
@@ -24,6 +22,7 @@ export class AuthController {
 
   @Post('login')
   @ApiOperation({ summary: 'User login' })
+  @ApiBody({ type: LoginDto })
   @ApiResponse({ status: 200, description: 'Login successful' })
   @ApiResponse({ status: 401, description: 'Invalid credentials' })
   login(@Body() dto: LoginDto) {
@@ -32,33 +31,16 @@ export class AuthController {
 
   @Post('send-otp')
   @ApiOperation({ summary: 'Send OTP to user email' })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        email: { type: 'string', format: 'email', example: 'user@example.com' },
-      },
-      required: ['email'],
-    },
-  })
+  @ApiBody({ type: SendOtpDto })
   @ApiResponse({ status: 200, description: 'OTP sent!' })
   @ApiResponse({ status: 404, description: 'User not found' })
-  sendOtp(@Body('email') email: string) {
-    return this.authService.sendOtp(email);
+  sendOtp(@Body() dto: SendOtpDto) {
+    return this.authService.sendOtp(dto.email);
   }
 
   @Post('verify-otp')
   @ApiOperation({ summary: 'Verify OTP' })
-  @ApiBody({
-    schema: {
-      type: 'object',
-      properties: {
-        email: { type: 'string', format: 'email', example: 'user@example.com' },
-        otp: { type: 'string', example: '123456' },
-      },
-      required: ['email'],
-    },
-  })
+  @ApiBody({ type: OtpDto })
   @ApiResponse({ status: 200, description: 'OTP verified successfully' })
   @ApiResponse({ status: 400, description: 'Invalid or expired OTP' })
   verifyOtp(@Body() dto: OtpDto) {
