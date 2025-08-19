@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException('Token not provided!');
     }
     try {
-      let data = this.jwt.verify(token, { secret: 'accessSecret' });
+      let data = this.jwt.verify(token);
       request['user'] = data.id;
       request['role'] = data.role;
       return true;

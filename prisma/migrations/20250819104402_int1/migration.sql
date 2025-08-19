@@ -26,7 +26,7 @@ CREATE TABLE "public"."User" (
     "surname" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "password" INTEGER NOT NULL,
+    "password" TEXT NOT NULL,
     "avatar_url" TEXT NOT NULL,
     "role" "public"."Role" NOT NULL,
     "regionId" TEXT,
