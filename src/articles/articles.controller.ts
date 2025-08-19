@@ -29,7 +29,7 @@ export class ArticlesController {
   @UseGuards(AuthGuard)
   @Post()
   create(@Body() data: CreateArticleDto, @Req() req: Request) {
-    return this.articlesService.create(data, req['user']);
+    return this.articlesService.create(data, req['User']);
   }
 
   @Get()

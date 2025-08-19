@@ -48,7 +48,7 @@ model User {
   surname    String
   phone      String @unique
   email      String @unique
-  password   Int
+  password   String
   avatar_url String
   role       Role
 
