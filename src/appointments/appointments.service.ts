@@ -14,11 +14,11 @@ import { PrismaService } from 'src/tools/prisma/prisma.service';
 export class AppointmentsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(data: CreateAppointmentDto) {
-    const { appointment_date, userId, doctorsId } = data;
+  async create(data: CreateAppointmentDto, userId?: string) {
+    const { appointment_date, doctorsId } = data;
 
     const existing = await this.prisma.appointments.findFirst({
-      where: { appointment_date, userId, doctorsId },
+      where: { appointment_date, doctorsId },
     });
 
     if (existing) {
@@ -26,7 +26,12 @@ export class AppointmentsService {
     }
 
     try {
-      const appointment = await this.prisma.appointments.create({ data });
+      const appointment = await this.prisma.appointments.create({
+        data: {
+          ...data,
+          userId: userId,
+        },
+      });
       return appointment;
     } catch (error) {
       if (error instanceof HttpException) throw error;

@@ -24,13 +24,6 @@ export class CreateDoctorDto {
   experience_years: number;
 
   @ApiProperty({
-    description: 'Doktor reytingi (decimal)',
-    example: '4.7',
-  })
-  @IsDecimal({ decimal_digits: '1', force_decimal: false })
-  rating: string;
-
-  @ApiProperty({
     description: 'Doktor rasmi URL',
     example: 'https://example.com/images/doctor1.jpg',
   })

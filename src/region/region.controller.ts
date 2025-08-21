@@ -23,7 +23,8 @@ export class RegionController {
   constructor(private readonly regionService: RegionService) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createRegionDto: CreateRegionDto) {
     return this.regionService.create(createRegionDto);
@@ -54,14 +55,16 @@ export class RegionController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateRegionDto: UpdateRegionDto) {
     return this.regionService.update(id, updateRegionDto);
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.regionService.remove(id);

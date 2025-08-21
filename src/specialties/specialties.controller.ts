@@ -23,7 +23,8 @@ export class SpecialtiesController {
   constructor(private readonly specialtiesService: SpecialtiesService) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createSpecialtyDto: CreateSpecialtyDto) {
     return this.specialtiesService.create(createSpecialtyDto);
@@ -62,7 +63,8 @@ export class SpecialtiesController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -72,7 +74,8 @@ export class SpecialtiesController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.specialtiesService.remove(id);

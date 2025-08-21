@@ -13,11 +13,11 @@ import { Prisma } from '@prisma/client';
 export class ReviewsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createReviewDto: CreateReviewDto) {
-    const { userId, doctorsId, clinicsId } = createReviewDto;
+  async create(createReviewDto: CreateReviewDto, userId: string) {
+    const { doctorsId, clinicsId } = createReviewDto;
 
     const exists = await this.prisma.reviews.findFirst({
-      where: { userId, doctorsId, clinicsId },
+      where: { doctorsId, clinicsId },
     });
 
     if (exists) {
@@ -25,7 +25,10 @@ export class ReviewsService {
     }
 
     const createdReview = await this.prisma.reviews.create({
-      data: createReviewDto,
+      data: {
+        ...createReviewDto,
+        userId: userId,
+      },
     });
 
     return {

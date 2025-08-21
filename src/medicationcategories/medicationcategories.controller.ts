@@ -25,7 +25,8 @@ export class MedicationcategoriesController {
   ) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createMedicationcategoryDto: CreateMedicationcategoryDto) {
     return this.medicationcategoriesService.create(createMedicationcategoryDto);
@@ -64,7 +65,8 @@ export class MedicationcategoriesController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -77,7 +79,8 @@ export class MedicationcategoriesController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.medicationcategoriesService.remove(id);

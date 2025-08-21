@@ -7,6 +7,7 @@ import {
 import { PrismaService } from 'src/tools/prisma/prisma.service';
 import { CreateClinicDto } from './dto/create-clinic.dto';
 import { UpdateClinicDto } from './dto/update-clinic.dto';
+import { Clinics_Type } from '@prisma/client';
 
 @Injectable()
 export class ClinicsService {
@@ -40,6 +41,7 @@ export class ClinicsService {
     sortBy?: 'name' | 'address' | 'email';
     page?: number;
     limit?: number;
+    type?: Clinics_Type;
   }) {
     try {
       const {
@@ -48,28 +50,33 @@ export class ClinicsService {
         sortBy = 'name',
         page = 1,
         limit = 10,
+        type,
       } = query;
 
       const take = Number(limit);
       const skip = (Number(page) - 1) * take;
 
-      const where = search
-        ? {
-            OR: [
-              { name: { contains: search, mode: 'insensitive' as const } },
-              { address: { contains: search, mode: 'insensitive' as const } },
-              { phone: { contains: search, mode: 'insensitive' as const } },
-              { email: { contains: search, mode: 'insensitive' as const } },
-              { website: { contains: search, mode: 'insensitive' as const } },
-              {
-                opening_hours: {
-                  contains: search,
-                  mode: 'insensitive' as const,
-                },
-              },
-            ],
-          }
-        : {};
+      const where: any = {};
+
+      if (search) {
+        where.OR = [
+          { name: { contains: search, mode: 'insensitive' as const } },
+          { address: { contains: search, mode: 'insensitive' as const } },
+          { phone: { contains: search, mode: 'insensitive' as const } },
+          { email: { contains: search, mode: 'insensitive' as const } },
+          { website: { contains: search, mode: 'insensitive' as const } },
+          {
+            opening_hours: {
+              contains: search,
+              mode: 'insensitive' as const,
+            },
+          },
+        ];
+      }
+
+      if (type) {
+        where.type = type; // 👈 enum bo‘yicha filter
+      }
 
       const clinics = await this.prisma.clinics.findMany({
         where,
@@ -79,7 +86,11 @@ export class ClinicsService {
         include: {
           Region: true,
           doctors: true,
-          clinicservices: true,
+          clinicservices: {
+            include: {
+              Services: true,
+            },
+          },
           appointments: true,
           reviews: true,
           promotions: true,

@@ -30,7 +30,6 @@ export class DoctorsService {
         data: {
           bio: createDoctorDto.bio,
           experience_years: createDoctorDto.experience_years,
-          rating: new Prisma.Decimal(createDoctorDto.rating),
           image_url: createDoctorDto.image_url,
           clinicsId: createDoctorDto.clinicsId ?? null,
           specialtiesId: createDoctorDto.specialtiesId ?? null,

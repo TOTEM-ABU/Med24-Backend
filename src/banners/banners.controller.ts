@@ -21,7 +21,8 @@ export class BannersController {
   constructor(private readonly bannersService: BannersService) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createBannerDto: CreateBannerDto) {
     return this.bannersService.create(createBannerDto);
@@ -38,14 +39,16 @@ export class BannersController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBannerDto: UpdateBannerDto) {
     return this.bannersService.update(id, updateBannerDto);
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.bannersService.remove(id);

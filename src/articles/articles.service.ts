@@ -21,7 +21,9 @@ export class ArticlesService {
     }
 
     try {
-      const article = await this.prisma.articles.create({ data });
+      const article = await this.prisma.articles.create({
+        data: { ...data, userId },
+      });
       return article;
     } catch (error) {
       if (error instanceof HttpException) {

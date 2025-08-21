@@ -24,7 +24,8 @@ export class PharmaciesController {
   constructor(private readonly pharmaciesService: PharmaciesService) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createPharmacyDto: CreatePharmacyDto) {
     return this.pharmaciesService.create(createPharmacyDto);
@@ -63,7 +64,8 @@ export class PharmaciesController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -73,7 +75,8 @@ export class PharmaciesController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.pharmaciesService.remove(id);
