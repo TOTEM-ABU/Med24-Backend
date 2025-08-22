@@ -49,6 +49,7 @@ CREATE TABLE "public"."Clinics" (
     "website" TEXT NOT NULL,
     "opening_hours" JSONB NOT NULL,
     "logo_url" TEXT NOT NULL,
+    "rating" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "type" "public"."Clinics_Type" NOT NULL,
     "regionId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -68,6 +69,8 @@ CREATE TABLE "public"."Specialties" (
 -- CreateTable
 CREATE TABLE "public"."Doctors" (
     "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "surname" TEXT NOT NULL,
     "bio" TEXT NOT NULL,
     "experience_years" INTEGER NOT NULL,
     "rating" DECIMAL(65,30) NOT NULL DEFAULT 0,

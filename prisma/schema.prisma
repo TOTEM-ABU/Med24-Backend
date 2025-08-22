@@ -77,6 +77,7 @@ model Clinics {
   website       String
   opening_hours Json //{"mon":"08:00-20:00","tue":"08:00-20:00"}
   logo_url      String
+  rating        Decimal      @default(0)
   type          Clinics_Type
 
   doctors        Doctors[]
@@ -102,6 +103,8 @@ model Specialties {
 
 model Doctors {
   id               String  @id @default(ulid())
+  name             String
+  surname          String
   bio              String
   experience_years Int
   rating           Decimal @default(0)
