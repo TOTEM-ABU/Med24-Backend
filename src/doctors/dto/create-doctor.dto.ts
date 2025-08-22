@@ -9,6 +9,20 @@ import {
 
 export class CreateDoctorDto {
   @ApiProperty({
+    description: 'Doktorning ismi',
+    example: 'John',
+  })
+  @IsString()
+  name: string;
+
+  @ApiProperty({
+    description: 'Doktorning familiyasi',
+    example: 'Doe',
+  })
+  @IsString()
+  surname: string;
+
+  @ApiProperty({
     description: 'Doktor haqida qisqa bio',
     example: 'Experienced cardiologist with 10+ years of practice.',
   })

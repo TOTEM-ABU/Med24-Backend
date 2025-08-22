@@ -29,6 +29,8 @@ export class DoctorsService {
       const createdDoctor = await this.prisma.doctors.create({
         data: {
           bio: createDoctorDto.bio,
+          name: createDoctorDto.name,
+          surname: createDoctorDto.surname,
           experience_years: createDoctorDto.experience_years,
           image_url: createDoctorDto.image_url,
           clinicsId: createDoctorDto.clinicsId ?? null,
