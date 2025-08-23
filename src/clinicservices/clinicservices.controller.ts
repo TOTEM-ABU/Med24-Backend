@@ -33,7 +33,7 @@ export class ClinicservicesController {
 
   @Get()
   @ApiQuery({ name: 'clinicsId', required: false })
-  @ApiQuery({ name: 'serviceId', required: false })
+  @ApiQuery({ name: 'servicesId', required: false })
   @ApiQuery({ name: 'minPrice', required: false, type: Number })
   @ApiQuery({ name: 'maxPrice', required: false, type: Number })
   @ApiQuery({ name: 'duration', required: false, type: Number })
@@ -41,26 +41,26 @@ export class ClinicservicesController {
   @ApiQuery({
     name: 'sortBy',
     required: false,
-    enum: ['price', 'duration_minutes', 'clinicsId', 'serviceId'],
+    enum: ['price', 'duration_minutes', 'clinicsId', 'servicesId'],
     example: 'price',
   })
   @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiQuery({ name: 'limit', required: false, type: Number })
   findAll(
     @Query('clinicsId') clinicsId?: string,
-    @Query('serviceId') serviceId?: string,
+    @Query('servicesId') servicesId?: string,
     @Query('minPrice') minPrice?: string,
     @Query('maxPrice') maxPrice?: string,
     @Query('duration') duration?: string,
     @Query('sort') sort?: 'asc' | 'desc',
     @Query('sortBy')
-    sortBy?: 'price' | 'duration_minutes' | 'clinicsId' | 'serviceId',
+    sortBy?: 'price' | 'duration_minutes' | 'clinicsId' | 'servicesId',
     @Query('page') page?: string,
     @Query('limit') limit?: string,
   ) {
     return this.clinicservicesService.findAll({
       clinicsId,
-      serviceId,
+      servicesId,
       minPrice: minPrice ? parseFloat(minPrice) : undefined,
       maxPrice: maxPrice ? parseFloat(maxPrice) : undefined,
       duration: duration ? parseInt(duration, 10) : undefined,

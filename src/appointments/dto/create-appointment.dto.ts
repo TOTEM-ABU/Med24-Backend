@@ -26,14 +26,6 @@ export class CreateAppointmentDto {
   notes: string;
 
   @ApiPropertyOptional({
-    description: 'Appointment qilgan foydalanuvchi ID',
-    example: 'user_123',
-  })
-  @IsOptional()
-  @IsString()
-  userId?: string;
-
-  @ApiPropertyOptional({
     description: 'Appointment qilingan klinika ID',
     example: 'clinic_456',
   })

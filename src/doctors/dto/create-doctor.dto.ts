@@ -9,6 +9,20 @@ import {
 
 export class CreateDoctorDto {
   @ApiProperty({
+    description: 'Doktorning ismi',
+    example: 'John',
+  })
+  @IsString()
+  name: string;
+
+  @ApiProperty({
+    description: 'Doktorning familiyasi',
+    example: 'Doe',
+  })
+  @IsString()
+  surname: string;
+
+  @ApiProperty({
     description: 'Doktor haqida qisqa bio',
     example: 'Experienced cardiologist with 10+ years of practice.',
   })
@@ -24,19 +38,11 @@ export class CreateDoctorDto {
   experience_years: number;
 
   @ApiProperty({
-    description: 'Doktor reytingi (decimal)',
-    example: '4.7',
-  })
-  @IsDecimal({ decimal_digits: '1', force_decimal: false })
-  rating: string;
-
-  @ApiProperty({
     description: 'Doktor rasmi URL',
     example: 'https://example.com/images/doctor1.jpg',
   })
   @IsString()
   image_url: string;
-
 
   @ApiPropertyOptional({
     description: 'Clinic ID',

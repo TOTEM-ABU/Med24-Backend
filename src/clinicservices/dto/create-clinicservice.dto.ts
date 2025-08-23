@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDecimal, IsNumber, IsUUID } from 'class-validator';
+import { IsDecimal, IsNumber, IsString, IsUUID } from 'class-validator';
 
 export class CreateClinicserviceDto {
   @ApiProperty({ example: '150000' })
-  @IsDecimal()
+  @IsNumber()
   price: number;
 
   @ApiProperty({ example: '30' })
@@ -11,10 +11,10 @@ export class CreateClinicserviceDto {
   duration_minutes: number;
 
   @ApiProperty({ example: "Clinic's uuid" })
-  @IsUUID()
+  @IsString()
   clinicsId: string;
 
   @ApiProperty({ example: "Service's uuid" })
-  @IsUUID()
+  @IsString()
   servicesId: string;
 }

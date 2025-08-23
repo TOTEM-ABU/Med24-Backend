@@ -58,6 +58,9 @@ export class SpecialtiesService {
           orderBy: { [sortBy]: sort },
           skip: (page - 1) * limit,
           take: limit,
+          include: {
+            doctors: true,
+          },
         }),
         this.prisma.specialties.count({ where }),
       ]);

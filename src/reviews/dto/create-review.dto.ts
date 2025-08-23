@@ -19,14 +19,6 @@ export class CreateReviewDto {
   comment: string;
 
   @ApiPropertyOptional({
-    description: 'Foydalanuvchi ID',
-    example: 'user_123',
-  })
-  @IsOptional()
-  @IsString()
-  userId?: string;
-
-  @ApiPropertyOptional({
     description: 'Klinika ID',
     example: 'clinic_456',
   })

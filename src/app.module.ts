@@ -20,6 +20,7 @@ import { PharmaciesModule } from './pharmacies/pharmacies.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaService } from './tools/prisma/prisma.service';
 import { PrismaModule } from './tools/prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { PrismaModule } from './tools/prisma/prisma.module';
     MedicationsModule,
     MedicationcategoriesModule,
     MedicationpricesModule,
+    AuthModule,
     PharmaciesModule,
     JwtModule.register({
       global: true,
