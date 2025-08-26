@@ -29,7 +29,7 @@ export class AppointmentsController {
   @UseGuards(AuthGuard)
   @Post()
   create(@Body() data: CreateAppointmentDto, @Req() req: Request) {
-    const userId = req['user'].id;
+    const userId = (req as any)?.user?.id;
     return this.appointmentsService.create(data, userId);
   }
 

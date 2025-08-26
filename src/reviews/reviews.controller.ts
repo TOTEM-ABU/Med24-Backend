@@ -30,7 +30,7 @@ export class ReviewsController {
   @UseGuards(AuthGuard)
   @Post()
   create(@Body() createReviewDto: CreateReviewDto, @Req() req: Request) {
-    const userId = req['user'].id;
+    const userId = (req as any)?.user?.id;
     return this.reviewsService.create(createReviewDto, userId);
   }
 
