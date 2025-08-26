@@ -89,6 +89,7 @@ export class DoctorsService {
         skip,
         take,
         include: {
+          Specialties: true,
           appointments: true,
           reviews: true,
         },
