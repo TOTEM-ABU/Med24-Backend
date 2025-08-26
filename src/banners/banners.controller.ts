@@ -12,7 +12,7 @@ import { BannersService } from './banners.service';
 import { CreateBannerDto } from './dto/create-banner.dto';
 import { UpdateBannerDto } from './dto/update-banner.dto';
 import { Roles } from 'src/tools/decorators/roles.decorators';
-import { Role } from 'generated/prisma';
+import { Role } from '@prisma/client';
 import { RoleGuard } from 'src/tools/guards/role/role.guard';
 import { AuthGuard } from 'src/tools/guards/auth/auth.guard';
 
