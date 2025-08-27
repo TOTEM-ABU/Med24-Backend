@@ -88,6 +88,7 @@ export class ClinicsService {
           doctors: {
             include: {
               Specialties: true,
+              reviews: true,
             },
           },
           clinicservices: {
