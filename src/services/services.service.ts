@@ -2,15 +2,21 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  OnModuleInit,
 } from '@nestjs/common';
 import { PrismaService } from 'src/tools/prisma/prisma.service';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { Prisma } from '@prisma/client';
+import { scrape } from 'src/scrapping';
 
 @Injectable()
-export class ServicesService {
+export class ServicesService implements OnModuleInit {
   constructor(private prisma: PrismaService) {}
+
+  async onModuleInit() {
+    await scrape()
+  }
 
   async create(createServiceDto: CreateServiceDto) {
     try {

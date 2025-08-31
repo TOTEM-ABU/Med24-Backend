@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
-import { Services_Category } from 'generated/prisma';
+import { Services_Category } from '@prisma/client';
 
 export class CreateServiceDto {
   @ApiProperty({ example: 'EKG Diagnostika' })

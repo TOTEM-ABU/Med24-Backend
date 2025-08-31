@@ -14,7 +14,7 @@ import { CreateSpecialtyDto } from './dto/create-specialty.dto';
 import { UpdateSpecialtyDto } from './dto/update-specialty.dto';
 import { ApiQuery } from '@nestjs/swagger';
 import { Roles } from 'src/tools/decorators/roles.decorators';
-import { Role } from 'generated/prisma';
+import { Role } from '@prisma/client';
 import { RoleGuard } from 'src/tools/guards/role/role.guard';
 import { AuthGuard } from 'src/tools/guards/auth/auth.guard';
 
