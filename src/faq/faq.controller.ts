@@ -21,7 +21,8 @@ export class FaqController {
   constructor(private readonly faqService: FaqService) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createFaqDto: CreateFaqDto) {
     return this.faqService.create(createFaqDto);
@@ -38,14 +39,16 @@ export class FaqController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFaqDto: UpdateFaqDto) {
     return this.faqService.update(id, updateFaqDto);
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.faqService.remove(id);

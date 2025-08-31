@@ -8,6 +8,7 @@ import {
   Delete,
   Query,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { ApiQuery } from '@nestjs/swagger';
 import { AppointmentsService } from './appointments.service';
@@ -17,16 +18,19 @@ import { Roles } from 'src/tools/decorators/roles.decorators';
 import { Role } from '@prisma/client';
 import { RoleGuard } from 'src/tools/guards/role/role.guard';
 import { AuthGuard } from 'src/tools/guards/auth/auth.guard';
+import { Request } from 'express';
 
 @Controller('appointments')
 export class AppointmentsController {
   constructor(private readonly appointmentsService: AppointmentsService) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Post()
-  create(@Body() data: CreateAppointmentDto) {
-    return this.appointmentsService.create(data);
+  create(@Body() data: CreateAppointmentDto, @Req() req: Request) {
+    const userId = (req as any)?.user?.id;
+    return this.appointmentsService.create(data, userId);
   }
 
   @Get()
@@ -78,14 +82,16 @@ export class AppointmentsController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() data: UpdateAppointmentDto) {
     return this.appointmentsService.update(id, data);
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.appointmentsService.remove(id);

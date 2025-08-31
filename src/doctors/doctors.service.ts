@@ -29,8 +29,9 @@ export class DoctorsService {
       const createdDoctor = await this.prisma.doctors.create({
         data: {
           bio: createDoctorDto.bio,
+          name: createDoctorDto.name,
+          surname: createDoctorDto.surname,
           experience_years: createDoctorDto.experience_years,
-          rating: new Prisma.Decimal(createDoctorDto.rating),
           image_url: createDoctorDto.image_url,
           clinicsId: createDoctorDto.clinicsId ?? null,
           specialtiesId: createDoctorDto.specialtiesId ?? null,
@@ -88,6 +89,7 @@ export class DoctorsService {
         skip,
         take,
         include: {
+          Specialties: true,
           appointments: true,
           reviews: true,
         },

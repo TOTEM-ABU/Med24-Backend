@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Clinics_Type {
+  PUBLIC
+  PRIVATE
+  VETERINARY
+}
+
 enum Role {
   ADMIN
   USER
@@ -62,7 +68,7 @@ model User {
 }
 
 model Clinics {
-  id            String @id @default(ulid())
+  id            String       @id @default(ulid())
   name          String
   description   String
   address       String
@@ -71,6 +77,8 @@ model Clinics {
   website       String
   opening_hours Json //{"mon":"08:00-20:00","tue":"08:00-20:00"}
   logo_url      String
+  rating        Decimal      @default(0)
+  type          Clinics_Type
 
   doctors        Doctors[]
   clinicservices ClinicServices[]
@@ -95,6 +103,8 @@ model Specialties {
 
 model Doctors {
   id               String  @id @default(ulid())
+  name             String
+  surname          String
   bio              String
   experience_years Int
   rating           Decimal @default(0)

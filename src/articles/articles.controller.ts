@@ -29,7 +29,8 @@ export class ArticlesController {
   @UseGuards(AuthGuard)
   @Post()
   create(@Body() data: CreateArticleDto, @Req() req: Request) {
-    return this.articlesService.create(data, req['User']);
+    const userId = (req as any)?.user?.id;
+    return this.articlesService.create(data, userId);
   }
 
   @Get()

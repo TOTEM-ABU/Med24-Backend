@@ -13,19 +13,28 @@ import { Prisma } from '@prisma/client';
 export class ReviewsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createReviewDto: CreateReviewDto) {
-    const { userId, doctorsId, clinicsId } = createReviewDto;
+  async create(createReviewDto: CreateReviewDto, userId: string) {
+    const { doctorsId, clinicsId } = createReviewDto;
 
     const exists = await this.prisma.reviews.findFirst({
-      where: { userId, doctorsId, clinicsId },
+      where: { doctorsId, clinicsId, userId },
     });
 
     if (exists) {
       throw new ConflictException('You already reviewed this!');
     }
 
-    const createdReview = await this.prisma.reviews.create({
-      data: createReviewDto,
+    const createdReview = await this.prisma.$transaction(async (tx) => {
+      const created = await tx.reviews.create({
+        data: {
+          ...createReviewDto,
+          userId: userId,
+        },
+      });
+
+      await this.#recalculateAverages(tx, clinicsId, doctorsId);
+
+      return created;
     });
 
     return {
@@ -100,11 +109,22 @@ export class ReviewsService {
   }
 
   async update(id: string, updateReviewDto: UpdateReviewDto) {
-    await this.#findReview(id);
+    const existing = await this.#findReview(id);
 
-    const updatedReview = await this.prisma.reviews.update({
-      where: { id },
-      data: updateReviewDto,
+    const updatedReview = await this.prisma.$transaction(async (tx) => {
+      const updated = await tx.reviews.update({
+        where: { id },
+        data: updateReviewDto,
+      });
+
+      // Recalculate for possibly changed relations
+      const clinicsId =
+        updateReviewDto.clinicsId ?? existing.clinicsId ?? undefined;
+      const doctorsId =
+        updateReviewDto.doctorsId ?? existing.doctorsId ?? undefined;
+      await this.#recalculateAverages(tx, clinicsId, doctorsId);
+
+      return updated;
     });
 
     return {
@@ -114,9 +134,16 @@ export class ReviewsService {
   }
 
   async remove(id: string) {
-    await this.#findReview(id);
+    const existing = await this.#findReview(id);
 
-    await this.prisma.reviews.delete({ where: { id } });
+    await this.prisma.$transaction(async (tx) => {
+      await tx.reviews.delete({ where: { id } });
+      await this.#recalculateAverages(
+        tx,
+        existing.clinicsId ?? undefined,
+        existing.doctorsId ?? undefined,
+      );
+    });
 
     return { message: 'Review removed successfully!' };
   }
@@ -136,5 +163,37 @@ export class ReviewsService {
     }
 
     return review;
+  }
+
+  async #recalculateAverages(
+    tx: Prisma.TransactionClient,
+    clinicsId?: string,
+    doctorsId?: string,
+  ) {
+    // Clinics average rating
+    if (clinicsId) {
+      const clinicsAgg = await tx.reviews.aggregate({
+        where: { clinicsId },
+        _avg: { rating: true },
+      });
+      const clinicAvg = clinicsAgg._avg.rating ?? 0;
+      await tx.clinics.update({
+        where: { id: clinicsId },
+        data: { rating: clinicAvg },
+      });
+    }
+
+    // Doctors average rating
+    if (doctorsId) {
+      const doctorsAgg = await tx.reviews.aggregate({
+        where: { doctorsId },
+        _avg: { rating: true },
+      });
+      const doctorAvg = doctorsAgg._avg.rating ?? 0;
+      await tx.doctors.update({
+        where: { id: doctorsId },
+        data: { rating: doctorAvg },
+      });
+    }
   }
 }

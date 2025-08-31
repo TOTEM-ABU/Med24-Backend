@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsEnum,
   IsPhoneNumber,
   IsString,
   IsUUID,
@@ -7,6 +8,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { OpeningHoursDto } from './opening-hours.dto';
+import { Clinics_Type } from '@prisma/client';
 
 export class CreateClinicDto {
   @ApiProperty({ example: 'Shifo Med Center' })
@@ -41,6 +43,11 @@ export class CreateClinicDto {
   @ApiProperty({ example: 'https://cdn.med24.uz/clinic1.png' })
   @IsString()
   logo_url: string;
+
+  @ApiProperty({ example: 'PUBLIC/PRIVATE/VETERINARY', enum: Clinics_Type })
+  @IsEnum(Clinics_Type)
+  @IsString()
+  type: Clinics_Type;
 
   @ApiProperty({ example: 'Region id' })
   @IsString()

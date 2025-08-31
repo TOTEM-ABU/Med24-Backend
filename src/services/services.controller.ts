@@ -24,7 +24,8 @@ export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createServiceDto: CreateServiceDto) {
     return this.servicesService.create(createServiceDto);
@@ -75,14 +76,16 @@ export class ServicesController {
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
     return this.servicesService.update(id, updateServiceDto);
   }
 
   @Roles(Role.ADMIN)
-  @UseGuards(RoleGuard, AuthGuard)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.servicesService.remove(id);

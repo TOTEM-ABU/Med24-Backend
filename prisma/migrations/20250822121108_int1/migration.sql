@@ -1,5 +1,8 @@
 -- CreateEnum
-CREATE TYPE "public"."Role" AS ENUM ('ADMIN', 'USER', 'DOCTOR');
+CREATE TYPE "public"."Clinics_Type" AS ENUM ('PUBLIC', 'PRIVATE', 'VETERINARY');
+
+-- CreateEnum
+CREATE TYPE "public"."Role" AS ENUM ('ADMIN', 'USER');
 
 -- CreateEnum
 CREATE TYPE "public"."Services_Category" AS ENUM ('DIAGNOSTICS', 'TREATMENT', 'ANALYSIS');
@@ -46,6 +49,8 @@ CREATE TABLE "public"."Clinics" (
     "website" TEXT NOT NULL,
     "opening_hours" JSONB NOT NULL,
     "logo_url" TEXT NOT NULL,
+    "rating" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "type" "public"."Clinics_Type" NOT NULL,
     "regionId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -64,11 +69,12 @@ CREATE TABLE "public"."Specialties" (
 -- CreateTable
 CREATE TABLE "public"."Doctors" (
     "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "surname" TEXT NOT NULL,
     "bio" TEXT NOT NULL,
     "experience_years" INTEGER NOT NULL,
     "rating" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "image_url" TEXT NOT NULL,
-    "userId" TEXT,
     "clinicsId" TEXT,
     "specialtiesId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -247,9 +253,6 @@ ALTER TABLE "public"."User" ADD CONSTRAINT "User_regionId_fkey" FOREIGN KEY ("re
 
 -- AddForeignKey
 ALTER TABLE "public"."Clinics" ADD CONSTRAINT "Clinics_regionId_fkey" FOREIGN KEY ("regionId") REFERENCES "public"."Region"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "public"."Doctors" ADD CONSTRAINT "Doctors_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."Doctors" ADD CONSTRAINT "Doctors_clinicsId_fkey" FOREIGN KEY ("clinicsId") REFERENCES "public"."Clinics"("id") ON DELETE SET NULL ON UPDATE CASCADE;

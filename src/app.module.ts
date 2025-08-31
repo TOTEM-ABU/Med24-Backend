@@ -21,6 +21,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PrismaService } from './tools/prisma/prisma.service';
 import { PrismaModule } from './tools/prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
+import { ScraperModule } from './scraper/scraper.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { AuthModule } from './auth/auth.module';
     MedicationpricesModule,
     AuthModule,
     PharmaciesModule,
+    ScraperModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET || 'default_secret',

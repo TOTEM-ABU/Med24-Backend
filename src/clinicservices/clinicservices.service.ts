@@ -29,18 +29,18 @@ export class ClinicservicesService {
 
   async findAll(params: {
     clinicsId?: string;
-    serviceId?: string;
+    servicesId?: string;
     minPrice?: number;
     maxPrice?: number;
     duration?: number;
     sort?: 'asc' | 'desc';
-    sortBy?: 'price' | 'duration_minutes' | 'clinicsId' | 'serviceId';
+    sortBy?: 'price' | 'duration_minutes' | 'clinicsId' | 'servicesId';
     page?: number;
     limit?: number;
   }) {
     const {
       clinicsId,
-      serviceId,
+      servicesId,
       minPrice,
       maxPrice,
       duration,
@@ -52,7 +52,7 @@ export class ClinicservicesService {
 
     const where: Prisma.ClinicServicesWhereInput = {
       ...(clinicsId && { clinicsId }),
-      ...(serviceId && { serviceId }),
+      ...(servicesId && { servicesId }),
       ...(duration && { duration_minutes: duration }),
       ...(minPrice || maxPrice
         ? {
