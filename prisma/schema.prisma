@@ -77,6 +77,7 @@ model Clinics {
   website       String
   opening_hours Json //{"mon":"08:00-20:00","tue":"08:00-20:00"}
   logo_url      String
+  image_url     String?      // Additional clinic image URL
   yandex_map_url String?     // Yandex Maps URL for clinic location
   rating        Decimal      @default(0)
   type          Clinics_Type
