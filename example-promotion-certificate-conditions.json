@@ -1,0 +1,40 @@
+{
+  "promotionId": "01J9W5S1AJ8D9X1T9Y8QZV4K2C",
+  "title": "Sertifikat chegirmasi",
+  "description": "Tibbiy xizmatlar uchun maxsus chegirma",
+  "discount_percent": 20,
+  "certificate_conditions": "Sertifikat olish shartlari:\n\n20% chegirma quyidagilarga taalluqli:\n- shifokor konsultatsiyasi;\n- diagnostika.\n\n10% chegirma quyidagilarga taalluqli:\n- operatsiyalar;\n- stomatologik xizmatlar.\n\nChegirma quyidagilarga tatbiq etilmaydi:\n- dori vositalari;\n- tibbiy sarf materiallari.\n\nChegirma boshqa amaldagi aksiyalar bilan qo'shilmaydi.",
+  "clinicsId": "01J9W5S1AJ8D9X1T9Y8QZV4K2C",
+  "examples": [
+    {
+      "title": "Shifokor konsultatsiyasi 20% chegirma",
+      "description": "Barcha shifokor konsultatsiyalari uchun maxsus chegirma",
+      "discount_percent": 20,
+      "certificate_conditions": "20% chegirma faqat shifokor konsultatsiyalari uchun amal qiladi. Dori vositalari va diagnostika xizmatlari bundan mustasno."
+    },
+    {
+      "title": "To'liq tibbiy xizmatlar paketi",
+      "description": "Keng qamrovli tibbiy xizmatlar uchun chegirma",
+      "discount_percent": 15,
+      "certificate_conditions": "15% chegirma quyidagi xizmatlar uchun:\n- Shifokor konsultatsiyasi\n- Laboratoriya tekshiruvlari\n- Rentgen va ultratovush\n- Fizioterapiya\n\nChegirma dori vositalari va operatsiyalar uchun amal qilmaydi."
+    },
+    {
+      "title": "Stomatologik xizmatlar aksiyasi",
+      "description": "Barcha stomatologik xizmatlar uchun maxsus narxlar",
+      "discount_percent": 25,
+      "certificate_conditions": "25% chegirma barcha stomatologik xizmatlar uchun:\n- Tish tozalash\n- Karies davolash\n- Tish protezlari\n- Implantatsiya\n\nChegirma kosmetik stomatologik xizmatlar uchun amal qilmaydi."
+    },
+    {
+      "title": "Diagnostika xizmatlari chegirmasi",
+      "description": "Barcha diagnostika xizmatlari uchun maxsus chegirma",
+      "discount_percent": 30,
+      "certificate_conditions": "30% chegirma quyidagi diagnostika xizmatlari uchun:\n- EKG\n- Ultrazvuk tekshiruv\n- Rentgen\n- Laboratoriya analizlari\n- MRI va CT skanerlash\n\nChegirma faqat diagnostika xizmatlari uchun amal qiladi. Davolash va operatsiyalar bundan mustasno."
+    },
+    {
+      "title": "Fizioterapiya va reabilitatsiya",
+      "description": "Fizioterapiya va reabilitatsiya xizmatlari uchun chegirma",
+      "discount_percent": 18,
+      "certificate_conditions": "18% chegirma fizioterapiya va reabilitatsiya xizmatlari uchun:\n- Massaj terapiyasi\n- Elektroterapiya\n- Gidroterapiya\n- Kineziterapiya\n- Manual terapiya\n\nChegirma faqat fizioterapiya xizmatlari uchun amal qiladi. Dori vositalari va boshqa tibbiy xizmatlar bundan mustasno."
+    }
+  ]
+}

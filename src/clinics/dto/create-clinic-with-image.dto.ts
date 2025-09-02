@@ -3,14 +3,10 @@ import {
   IsEnum,
   IsPhoneNumber,
   IsString,
-  IsUUID,
-  ValidateNested,
 } from 'class-validator';
-import { Type } from 'class-transformer';
-import { OpeningHoursDto } from './opening-hours.dto';
 import { Clinics_Type } from '@prisma/client';
 
-export class CreateClinicDto {
+export class CreateClinicWithImageDto {
   @ApiProperty({ example: 'Shifo Med Center' })
   @IsString()
   name: string;
@@ -35,14 +31,12 @@ export class CreateClinicDto {
   @IsString()
   website: string;
 
-  @ApiProperty({ type: OpeningHoursDto })
-  @ValidateNested()
-  @Type(() => OpeningHoursDto)
-  opening_hours: OpeningHoursDto;
-
-  @ApiProperty({ example: 'https://cdn.med24.uz/clinic1.png' })
+  @ApiProperty({ 
+    example: '{"mon":"08:00-20:00","tue":"08:00-20:00","wed":"08:00-20:00","thu":"08:00-20:00","fri":"08:00-20:00","sat":"09:00-18:00","sun":"10:00-16:00"}',
+    description: 'Opening hours as JSON string for multipart form data'
+  })
   @IsString()
-  logo_url: string;
+  opening_hours: string;
 
   @ApiProperty({ 
     example: 'https://yandex.uz/maps/10335/tashkent/?ll=69.240562%2C41.299496&z=16&l=map&mode=search&text=Shifo%20Med%20Center&sll=69.240562%2C41.299496&sspn=0.001%2C0.001&ol=geo&oll=69.240562%2C41.299496',
