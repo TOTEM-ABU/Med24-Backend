@@ -21,6 +21,7 @@ export class PromotionsService {
           title: createPromotionDto.title,
           discount_percent: createPromotionDto.discount_percent,
           description: createPromotionDto.description ?? null,
+          certificate_conditions: createPromotionDto.certificate_conditions ?? null,
           clinicsId: createPromotionDto.clinicsId ?? null,
         },
       });
@@ -115,6 +116,7 @@ export class PromotionsService {
         data: {
           title: updatePromotionDto.title,
           discount_percent: updatePromotionDto.discount_percent ?? undefined, // ✅ Decimal emas, number
+          certificate_conditions: updatePromotionDto.certificate_conditions ?? undefined,
           clinicsId: updatePromotionDto.clinicsId ?? null,
         },
       });

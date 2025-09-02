@@ -77,6 +77,7 @@ model Clinics {
   website       String
   opening_hours Json //{"mon":"08:00-20:00","tue":"08:00-20:00"}
   logo_url      String
+  yandex_map_url String?     // Yandex Maps URL for clinic location
   rating        Decimal      @default(0)
   type          Clinics_Type
 
@@ -194,6 +195,7 @@ model Promotions {
   title            String
   description      String
   discount_percent Int
+  certificate_conditions String? // Sertifikat olish shartlari va chegirma qoidalari
 
   clinicsId String?
   Clinics   Clinics? @relation(fields: [clinicsId], references: [id])
@@ -216,6 +218,10 @@ model FAQ {
   question String
   answer   String
 
+  // Optional medication relationship
+  medicationId String?
+  medication   Medications? @relation(fields: [medicationId], references: [id])
+
   createdAt DateTime @default(now())
 }
 
@@ -233,18 +239,20 @@ model Medications {
   id                    String  @id @default(ulid())
   name                  String
   description           String
-  composition           String
+  composition           String  // Detailed medication information including all sections
   manufacturer          String
   country               String
   image_url             String
   prescription_required Boolean @default(true)
 
   medicationprices MedicationPrices[]
+  faqs            FAQ[] // Medication-specific FAQs
 
   medicationCategoriesId String?
   MedicationCategories   MedicationCategories? @relation(fields: [medicationCategoriesId], references: [id])
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model MedicationCategories {

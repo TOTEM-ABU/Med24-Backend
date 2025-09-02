@@ -1,0 +1,20 @@
+{
+  "name": "Shifo Med Center",
+  "description": "Zamonaviy tibbiy xizmatlar ko'rsatuvchi klinika",
+  "address": "Toshkent shahar, Chilonzor tumani, Bunyodkor ko'chasi, 12-uy",
+  "phone": "+998971112233",
+  "email": "info@shifomed.uz",
+  "website": "https://shifomed.uz",
+  "opening_hours": {
+    "mon": "08:00-20:00",
+    "tue": "08:00-20:00",
+    "wed": "08:00-20:00",
+    "thu": "08:00-20:00",
+    "fri": "08:00-20:00",
+    "sat": "09:00-18:00",
+    "sun": "10:00-16:00"
+  },
+  "logo_url": "https://example.com/clinic-logo.png",
+  "type": "PRIVATE",
+  "regionId": "01J9W5S1AJ8D9X1T9Y8QZV4K2C"
+}

@@ -41,11 +41,7 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "prisma": "^6.14.0",
-<<<<<<< HEAD
-    "puppeteer": "^24.16.2",
-=======
     "puppeteer": "^24.17.0",
->>>>>>> 380f8b47ebc06e8698c00fe73bc6362275c87ecf
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

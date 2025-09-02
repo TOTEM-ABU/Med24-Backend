@@ -11,12 +11,8 @@ import { Prisma } from '@prisma/client';
 import { scrape } from 'src/scrapping';
 
 @Injectable()
-export class ServicesService implements OnModuleInit {
+export class ServicesService {
   constructor(private prisma: PrismaService) {}
-
-  async onModuleInit() {
-    await scrape()
-  }
 
   async create(createServiceDto: CreateServiceDto) {
     try {

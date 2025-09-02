@@ -22,9 +22,11 @@ import { PrismaService } from './tools/prisma/prisma.service';
 import { PrismaModule } from './tools/prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { ScraperModule } from './scraper/scraper.module';
+import { MulterModule } from './tools/multer/multer.module';
 
 @Module({
   imports: [
+    AuthModule,
     RegionModule,
     UserModule,
     ClinicsModule,
@@ -42,9 +44,9 @@ import { ScraperModule } from './scraper/scraper.module';
     MedicationsModule,
     MedicationcategoriesModule,
     MedicationpricesModule,
-    AuthModule,
     PharmaciesModule,
     ScraperModule,
+    MulterModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET || 'default_secret',
