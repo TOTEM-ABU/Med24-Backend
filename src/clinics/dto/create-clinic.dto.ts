@@ -45,6 +45,14 @@ export class CreateClinicDto {
   logo_url: string;
 
   @ApiProperty({ 
+    example: 'https://cdn.med24.uz/clinic1-image.jpg',
+    required: false,
+    description: 'Additional clinic image URL'
+  })
+  @IsString()
+  image_url?: string;
+
+  @ApiProperty({ 
     example: 'https://yandex.uz/maps/10335/tashkent/?ll=69.240562%2C41.299496&z=16&l=map&mode=search&text=Shifo%20Med%20Center&sll=69.240562%2C41.299496&sspn=0.001%2C0.001&ol=geo&oll=69.240562%2C41.299496',
     required: false,
     description: 'Yandex Maps URL for clinic location'

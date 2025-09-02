@@ -249,6 +249,77 @@ export class ClinicsController {
   @Roles(Role.ADMIN)
   @UseGuards(RoleGuard)
   @UseGuards(AuthGuard)
+  @Patch(':id/additional-image')
+  @ApiOperation({ summary: 'Update clinic additional image' })
+  @ApiResponse({ status: 200, description: 'Clinic additional image updated successfully' })
+  @ApiResponse({ status: 400, description: 'Bad request - invalid file or data' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admin role required' })
+  @ApiResponse({ status: 404, description: 'Clinic not found' })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        image: {
+          type: 'string',
+          format: 'binary',
+          description: 'Clinic additional image file',
+        },
+      },
+      required: ['image'],
+    },
+  })
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './uploads/clinics',
+        filename: (req, file, cb) => {
+          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+          cb(null, `additional-${uniqueSuffix}-${file.originalname}`);
+        },
+      }),
+      fileFilter: (req, file, cb) => {
+        if (file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
+          cb(null, true);
+        } else {
+          cb(new Error('Only image files are allowed!'), false);
+        }
+      },
+      limits: {
+        fileSize: 5 * 1024 * 1024, // 5MB limit
+      },
+    }),
+  )
+  updateAdditionalImage(
+    @Param('id') id: string,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
+    if (!image) {
+      throw new BadRequestException('Image file is required!');
+    }
+    
+    const imageUrl = `http://localhost:3000/uploads/clinics/${image.filename}`;
+    
+    return this.clinicsService.update(id, { image_url: imageUrl });
+  }
+
+  @Roles(Role.ADMIN)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
+  @Delete(':id/additional-image')
+  @ApiOperation({ summary: 'Delete clinic additional image' })
+  @ApiResponse({ status: 200, description: 'Clinic additional image deleted successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admin role required' })
+  @ApiResponse({ status: 404, description: 'Clinic not found' })
+  deleteAdditionalImage(@Param('id') id: string) {
+    return this.clinicsService.update(id, { image_url: undefined });
+  }
+
+  @Roles(Role.ADMIN)
+  @UseGuards(RoleGuard)
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiOperation({ summary: 'Delete clinic' })
   @ApiResponse({ status: 200, description: 'Clinic deleted successfully' })
