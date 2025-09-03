@@ -114,7 +114,7 @@ export class ClinicsController {
       throw new BadRequestException('Image file is required!');
     }
     
-    const imageUrl = `http://localhost:3000/uploads/clinics/${image.filename}`;
+    const imageUrl = `http://45.76.94.219:3132/uploads/clinics/${image.filename}`;
     
     // Convert string JSON to object for multipart form data
     let openingHours;
@@ -241,7 +241,7 @@ export class ClinicsController {
       throw new BadRequestException('Image file is required!');
     }
     
-    const imageUrl = `http://localhost:3000/uploads/clinics/${image.filename}`;
+    const imageUrl = `http://45.76.94.219:3132/uploads/clinics/${image.filename}`;
     
     return this.clinicsService.update(id, { logo_url: imageUrl });
   }
@@ -299,7 +299,7 @@ export class ClinicsController {
       throw new BadRequestException('Image file is required!');
     }
     
-    const imageUrl = `http://localhost:3000/uploads/clinics/${image.filename}`;
+    const imageUrl = `http://45.76.94.219:3132/uploads/clinics/${image.filename}`;
     
     return this.clinicsService.update(id, { image_url: imageUrl });
   }

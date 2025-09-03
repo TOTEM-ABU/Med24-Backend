@@ -7,7 +7,7 @@ The `prescription_required` field validation error has been fixed. When using mu
 
 ### Using curl:
 ```bash
-curl -X POST "http://localhost:3000/api/medications/with-image" \
+curl -X POST "http://45.76.94.219:3132/api/medications/with-image" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "name=MAGNE V6" \
   -F "description=Magniy va B6 vitamini bilan tabletkalar" \
@@ -43,7 +43,7 @@ formData.append('prescription_required', 'false'); // Note: string value, not bo
 formData.append('medicationCategoriesId', '01J9W5S1AJ8D9X1T9Y8QZV4K2C');
 formData.append('image', imageFile);
 
-fetch('http://localhost:3000/api/medications/with-image', {
+fetch('http://45.76.94.219:3132/api/medications/with-image', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_JWT_TOKEN'
@@ -68,4 +68,4 @@ fetch('http://localhost:3000/api/medications/with-image', {
 
 ## Testing
 
-The medication image upload should now work correctly without the validation error. You can test it using the examples above or through the Swagger documentation at `http://localhost:3000/docs`.
+The medication image upload should now work correctly without the validation error. You can test it using the examples above or through the Swagger documentation at `http://45.76.94.219:3132/docs`.

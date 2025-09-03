@@ -103,7 +103,7 @@ export class MedicationsController {
       throw new BadRequestException('Image file is required!');
     }
     
-    const imageUrl = `http://localhost:3000/uploads/medications/${image.filename}`;
+    const imageUrl = `http://45.76.94.219:3132/uploads/medications/${image.filename}`;
     
     // Convert string boolean to actual boolean for multipart form data
     const medicationData = {
@@ -249,7 +249,7 @@ export class MedicationsController {
       throw new BadRequestException('Image file is required!');
     }
     
-    const imageUrl = `http://localhost:3000/uploads/medications/${image.filename}`;
+    const imageUrl = `http://45.76.94.219:3132/uploads/medications/${image.filename}`;
     
     return this.medicationsService.update(id, { image_url: imageUrl });
   }

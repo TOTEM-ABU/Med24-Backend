@@ -122,12 +122,12 @@ Deletes an FAQ from a specific medication. Requires admin authentication.
 
 #### Get FAQs for a medication:
 ```bash
-curl -X GET "http://localhost:3000/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C/faqs"
+curl -X GET "http://45.76.94.219:3132/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C/faqs"
 ```
 
 #### Add a new FAQ:
 ```bash
-curl -X POST "http://localhost:3000/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C/faqs" \
+curl -X POST "http://45.76.94.219:3132/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C/faqs" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -138,7 +138,7 @@ curl -X POST "http://localhost:3000/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C/f
 
 #### Update an FAQ:
 ```bash
-curl -X PATCH "http://localhost:3000/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C/faqs/01J9W5S1AJ8D9X1T9Y8QZV4K2D" \
+curl -X PATCH "http://45.76.94.219:3132/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C/faqs/01J9W5S1AJ8D9X1T9Y8QZV4K2D" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -148,7 +148,7 @@ curl -X PATCH "http://localhost:3000/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C/
 
 #### Delete an FAQ:
 ```bash
-curl -X DELETE "http://localhost:3000/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C/faqs/01J9W5S1AJ8D9X1T9Y8QZV4K2D" \
+curl -X DELETE "http://45.76.94.219:3132/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C/faqs/01J9W5S1AJ8D9X1T9Y8QZV4K2D" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
@@ -157,13 +157,13 @@ curl -X DELETE "http://localhost:3000/api/medications/01J9W5S1AJ8D9X1T9Y8QZV4K2C
 ```javascript
 // Get FAQs for a medication
 const getMedicationFaqs = async (medicationId) => {
-  const response = await fetch(`http://localhost:3000/api/medications/${medicationId}/faqs`);
+  const response = await fetch(`http://45.76.94.219:3132/api/medications/${medicationId}/faqs`);
   return await response.json();
 };
 
 // Add a new FAQ
 const addMedicationFaq = async (medicationId, question, answer, token) => {
-  const response = await fetch(`http://localhost:3000/api/medications/${medicationId}/faqs`, {
+  const response = await fetch(`http://45.76.94.219:3132/api/medications/${medicationId}/faqs`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -176,7 +176,7 @@ const addMedicationFaq = async (medicationId, question, answer, token) => {
 
 // Update an FAQ
 const updateMedicationFaq = async (medicationId, faqId, updateData, token) => {
-  const response = await fetch(`http://localhost:3000/api/medications/${medicationId}/faqs/${faqId}`, {
+  const response = await fetch(`http://45.76.94.219:3132/api/medications/${medicationId}/faqs/${faqId}`, {
     method: 'PATCH',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -189,7 +189,7 @@ const updateMedicationFaq = async (medicationId, faqId, updateData, token) => {
 
 // Delete an FAQ
 const deleteMedicationFaq = async (medicationId, faqId, token) => {
-  const response = await fetch(`http://localhost:3000/api/medications/${medicationId}/faqs/${faqId}`, {
+  const response = await fetch(`http://45.76.94.219:3132/api/medications/${medicationId}/faqs/${faqId}`, {
     method: 'DELETE',
     headers: {
       'Authorization': `Bearer ${token}`
@@ -244,7 +244,7 @@ The FAQ system is designed to work seamlessly with frontend applications:
 ## Swagger Documentation
 
 All endpoints are documented in Swagger and can be accessed at:
-`http://localhost:3000/docs`
+`http://45.76.94.219:3132/docs`
 
 The Swagger documentation includes:
 - Complete API schema

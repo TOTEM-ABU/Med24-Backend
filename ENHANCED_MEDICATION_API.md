@@ -186,7 +186,7 @@ GET /api/medications?page=1&limit=50
       "composition": "Magniy laktat dihidrat 470mg, Piridoksin gidroxlorid 5mg",
       "manufacturer": "Sanofi",
       "country": "Fransiya",
-      "image_url": "http://localhost:3000/uploads/medications/medication-1234567890-123456789-magne-v6.jpg",
+      "image_url": "http://45.76.94.219:3132/uploads/medications/medication-1234567890-123456789-magne-v6.jpg",
       "prescription_required": false,
       "instructions": "Ushbu dori vositasi magniy saqlaydi...",
       "pharmacodynamics": "Magniy asosan xujayra ichki kationi hisoblanadi...",
@@ -226,7 +226,7 @@ GET /api/medications?page=1&limit=50
 ## Swagger Documentation
 
 Access the comprehensive API documentation at:
-- Development: `http://localhost:3000/docs`
+- Development: `http://45.76.94.219:3132/docs`
 
 The Swagger documentation includes:
 - Complete endpoint descriptions
@@ -252,7 +252,7 @@ const searchMedications = async () => {
     manufacturer: 'Sanofi'
   });
 
-  const response = await fetch(`http://localhost:3000/api/medications?${params}`);
+  const response = await fetch(`http://45.76.94.219:3132/api/medications?${params}`);
   const data = await response.json();
   console.log(data);
 };
@@ -272,7 +272,7 @@ const createMedication = async () => {
     // ... other fields
   };
 
-  const response = await fetch('http://localhost:3000/api/medications', {
+  const response = await fetch('http://45.76.94.219:3132/api/medications', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -289,16 +289,16 @@ const createMedication = async () => {
 ### cURL Examples
 ```bash
 # Search medications
-curl -X GET "http://localhost:3000/api/medications?search=magniy&manufacturer=Sanofi&prescription_required=false"
+curl -X GET "http://45.76.94.219:3132/api/medications?search=magniy&manufacturer=Sanofi&prescription_required=false"
 
 # Create medication
-curl -X POST "http://localhost:3000/api/medications" \
+curl -X POST "http://45.76.94.219:3132/api/medications" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d @example-medication-data.json
 
 # Create medication with image
-curl -X POST "http://localhost:3000/api/medications/with-image" \
+curl -X POST "http://45.76.94.219:3132/api/medications/with-image" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "name=MAGNE V6" \
   -F "description=Magniy va B6 vitamini bilan tabletkalar" \

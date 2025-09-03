@@ -42,7 +42,7 @@ This feature adds image upload functionality to the clinics module, allowing adm
 
 ## Swagger Documentation
 The API is fully documented with Swagger. Access the documentation at:
-- Development: `http://localhost:3000/docs`
+- Development: `http://45.76.94.219:3132/docs`
 
 ## Security Features
 - Admin role required for all image upload operations
@@ -55,7 +55,7 @@ The API is fully documented with Swagger. Access the documentation at:
 ### Using curl:
 ```bash
 # Create clinic with image
-curl -X POST "http://localhost:3000/api/clinics/with-image" \
+curl -X POST "http://45.76.94.219:3132/api/clinics/with-image" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "name=Shifo Med Center" \
   -F "description=Zamonaviy tibbiy xizmatlar ko'rsatuvchi klinika" \
@@ -69,7 +69,7 @@ curl -X POST "http://localhost:3000/api/clinics/with-image" \
   -F "image=@/path/to/clinic-logo.jpg"
 
 # Update clinic image
-curl -X PATCH "http://localhost:3000/api/clinics/CLINIC_ID/image" \
+curl -X PATCH "http://45.76.94.219:3132/api/clinics/CLINIC_ID/image" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "image=@/path/to/new-logo.jpg"
 ```
@@ -97,7 +97,7 @@ formData.append('type', 'PRIVATE');
 formData.append('regionId', '01J9W5S1AJ8D9X1T9Y8QZV4K2C');
 formData.append('image', imageFile);
 
-fetch('http://localhost:3000/api/clinics/with-image', {
+fetch('http://45.76.94.219:3132/api/clinics/with-image', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_JWT_TOKEN'
@@ -109,7 +109,7 @@ fetch('http://localhost:3000/api/clinics/with-image', {
 const updateFormData = new FormData();
 updateFormData.append('image', newImageFile);
 
-fetch('http://localhost:3000/api/clinics/CLINIC_ID/image', {
+fetch('http://45.76.94.219:3132/api/clinics/CLINIC_ID/image', {
   method: 'PATCH',
   headers: {
     'Authorization': 'Bearer YOUR_JWT_TOKEN'
@@ -147,7 +147,7 @@ Successful responses return the created/updated clinic object with the generated
     "sat": "09:00-18:00",
     "sun": "10:00-16:00"
   },
-  "logo_url": "http://localhost:3000/uploads/clinics/clinic-1234567890-123456789-logo.jpg",
+  "logo_url": "http://45.76.94.219:3132/uploads/clinics/clinic-1234567890-123456789-logo.jpg",
   "rating": 0,
   "type": "PRIVATE",
   "regionId": "01J9W5S1AJ8D9X1T9Y8QZV4K2C",
