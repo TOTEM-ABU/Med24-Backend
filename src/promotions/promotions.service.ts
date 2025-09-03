@@ -98,6 +98,9 @@ export class PromotionsService {
   async findOne(id: string) {
     const promotion = await this.prisma.promotions.findUnique({
       where: { id },
+      include: {
+        Clinics: true,
+      },
     });
 
     if (!promotion) {
