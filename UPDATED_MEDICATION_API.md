@@ -127,7 +127,7 @@ The search functionality now searches within the composition JSON content, allow
       "composition": "{\"ingredients\": \"1 таблетка содержит...\", \"instructions\": \"Ushbu dori vositasi magniy saqlaydi...\", \"pharmacodynamics\": \"Magniy asosan xujayra ichki kationi hisoblanadi...\", \"pediatric_use\": \"Bolalarda foydalanish haqida maxsus ko'rsatmalar mavjud...\", \"pregnancy_lactation\": \"Homiladorlikning yetarli sonidagi klinik tajriba...\", \"contraindications\": \"Ushbu preparatni quyidagi hollarda qo'llash mumkin emas...\", \"dosage\": \"Kattalar: 1-2 tabletka kuniga 2-3 marta...\", \"side_effects\": \"Yon ta'sirlar: allergik reaktsiyalar...\", \"interactions\": \"Boshqa dorilar bilan o'zaro ta'sirlar...\", \"storage_conditions\": \"Quruq joyda, bolalar qo'lidan uzoqda...\", \"expiration_date\": \"3 yil\"}",
       "manufacturer": "Sanofi",
       "country": "Fransiya",
-      "image_url": "http://localhost:3000/uploads/medications/medication-1234567890-123456789-magne-v6.jpg",
+      "image_url": "http://45.76.94.219:3132/uploads/medications/medication-1234567890-123456789-magne-v6.jpg",
       "prescription_required": false,
       "medicationCategoriesId": "01J9W5S1AJ8D9X1T9Y8QZV4K2C",
       "MedicationCategories": {
@@ -174,7 +174,7 @@ const createMedication = async () => {
     prescription_required: false
   };
 
-  const response = await fetch('http://localhost:3000/api/medications', {
+  const response = await fetch('http://45.76.94.219:3132/api/medications', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -189,7 +189,7 @@ const createMedication = async () => {
 
 // Parse composition data when retrieving
 const getMedication = async (id) => {
-  const response = await fetch(`http://localhost:3000/api/medications/${id}`);
+  const response = await fetch(`http://45.76.94.219:3132/api/medications/${id}`);
   const medication = await response.json();
   
   // Parse the composition JSON
@@ -205,16 +205,16 @@ const getMedication = async (id) => {
 ### cURL Examples
 ```bash
 # Create medication with structured composition
-curl -X POST "http://localhost:3000/api/medications" \
+curl -X POST "http://45.76.94.219:3132/api/medications" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -d @example-medication-data.json
 
 # Search medications (searches within composition content)
-curl -X GET "http://localhost:3000/api/medications?search=magniy&manufacturer=Sanofi"
+curl -X GET "http://45.76.94.219:3132/api/medications?search=magniy&manufacturer=Sanofi"
 
 # Get medication and parse composition
-curl -X GET "http://localhost:3000/api/medications/MEDICATION_ID"
+curl -X GET "http://45.76.94.219:3132/api/medications/MEDICATION_ID"
 ```
 
 ## Benefits of This Approach
@@ -236,7 +236,7 @@ The database has been updated with the migration `20250902094805_remove_separate
 ## Swagger Documentation
 
 Access the updated API documentation at:
-- Development: `http://localhost:3000/docs`
+- Development: `http://45.76.94.219:3132/docs`
 
 The Swagger documentation includes:
 - Updated composition field examples

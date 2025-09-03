@@ -12,7 +12,7 @@ The `opening_hours` field validation error has been fixed. When using multipart/
 
 ### Using curl:
 ```bash
-curl -X POST "http://localhost:3000/api/clinics/with-image" \
+curl -X POST "http://45.76.94.219:3132/api/clinics/with-image" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "name=Shifo Med Center" \
   -F "description=Zamonaviy tibbiy xizmatlar ko'rsatuvchi klinika" \
@@ -48,7 +48,7 @@ formData.append('type', 'PRIVATE');
 formData.append('regionId', '01J9W5S1AJ8D9X1T9Y8QZV4K2C');
 formData.append('image', imageFile);
 
-fetch('http://localhost:3000/api/clinics/with-image', {
+fetch('http://45.76.94.219:3132/api/clinics/with-image', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_JWT_TOKEN'
@@ -103,7 +103,7 @@ const openingHoursString = JSON.stringify({
 
 ## Testing
 
-The clinic image upload should now work correctly without the validation error. You can test it using the examples above or through the Swagger documentation at `http://localhost:3000/docs`.
+The clinic image upload should now work correctly without the validation error. You can test it using the examples above or through the Swagger documentation at `http://45.76.94.219:3132/docs`.
 
 ## Error Handling
 

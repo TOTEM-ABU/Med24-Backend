@@ -79,8 +79,8 @@ Updates the additional image for a specific clinic. Requires admin authenticatio
   "data": {
     "id": "01J9W5S1AJ8D9X1T9Y8QZV4K2C",
     "name": "Shifo Med Center",
-    "logo_url": "http://localhost:3000/uploads/clinics/clinic-1234567890-logo.png",
-    "image_url": "http://localhost:3000/uploads/clinics/additional-1234567890-image.jpg",
+    "logo_url": "http://45.76.94.219:3132/uploads/clinics/clinic-1234567890-logo.png",
+    "image_url": "http://45.76.94.219:3132/uploads/clinics/additional-1234567890-image.jpg",
     // ... other fields
   }
 }
@@ -101,7 +101,7 @@ Removes the additional image from a specific clinic. Requires admin authenticati
   "data": {
     "id": "01J9W5S1AJ8D9X1T9Y8QZV4K2C",
     "name": "Shifo Med Center",
-    "logo_url": "http://localhost:3000/uploads/clinics/clinic-1234567890-logo.png",
+    "logo_url": "http://45.76.94.219:3132/uploads/clinics/clinic-1234567890-logo.png",
     "image_url": null,
     // ... other fields
   }
@@ -114,7 +114,7 @@ Removes the additional image from a specific clinic. Requires admin authenticati
 
 #### Using curl:
 ```bash
-curl -X PATCH "http://localhost:3000/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C/additional-image" \
+curl -X PATCH "http://45.76.94.219:3132/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C/additional-image" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "image=@/path/to/clinic-additional-image.jpg"
 ```
@@ -125,7 +125,7 @@ const updateClinicAdditionalImage = async (clinicId, imageFile, token) => {
   const formData = new FormData();
   formData.append('image', imageFile);
 
-  const response = await fetch(`http://localhost:3000/api/clinics/${clinicId}/additional-image`, {
+  const response = await fetch(`http://45.76.94.219:3132/api/clinics/${clinicId}/additional-image`, {
     method: 'PATCH',
     headers: {
       'Authorization': `Bearer ${token}`
@@ -140,14 +140,14 @@ const updateClinicAdditionalImage = async (clinicId, imageFile, token) => {
 
 #### Using curl:
 ```bash
-curl -X DELETE "http://localhost:3000/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C/additional-image" \
+curl -X DELETE "http://45.76.94.219:3132/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C/additional-image" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
 #### Using JavaScript/Fetch:
 ```javascript
 const deleteClinicAdditionalImage = async (clinicId, token) => {
-  const response = await fetch(`http://localhost:3000/api/clinics/${clinicId}/additional-image`, {
+  const response = await fetch(`http://45.76.94.219:3132/api/clinics/${clinicId}/additional-image`, {
     method: 'DELETE',
     headers: {
       'Authorization': `Bearer ${token}`
@@ -161,7 +161,7 @@ const deleteClinicAdditionalImage = async (clinicId, token) => {
 
 #### Using JSON (POST /api/clinics):
 ```bash
-curl -X POST "http://localhost:3000/api/clinics" \
+curl -X POST "http://45.76.94.219:3132/api/clinics" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -244,7 +244,7 @@ const ClinicImageUpload = ({ clinicId, token, onSuccess }) => {
       const formData = new FormData();
       formData.append('image', file);
       
-      const response = await fetch(`http://localhost:3000/api/clinics/${clinicId}/image`, {
+      const response = await fetch(`http://45.76.94.219:3132/api/clinics/${clinicId}/image`, {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -265,7 +265,7 @@ const ClinicImageUpload = ({ clinicId, token, onSuccess }) => {
       const formData = new FormData();
       formData.append('image', file);
       
-      const response = await fetch(`http://localhost:3000/api/clinics/${clinicId}/additional-image`, {
+      const response = await fetch(`http://45.76.94.219:3132/api/clinics/${clinicId}/additional-image`, {
         method: 'PATCH',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -397,7 +397,7 @@ const ClinicImageUpload = ({ clinicId, token, onSuccess }) => {
 
 ## Swagger Documentation
 
-The new endpoints are automatically documented in Swagger at `http://localhost:3000/docs` with:
+The new endpoints are automatically documented in Swagger at `http://45.76.94.219:3132/docs` with:
 - Complete API schema
 - File upload specifications
 - Request/response examples

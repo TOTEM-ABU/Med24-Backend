@@ -49,7 +49,7 @@ Automatically includes the `certificate_conditions` field through `PartialType(C
 
 #### Using JSON (POST /api/promotions):
 ```bash
-curl -X POST "http://localhost:3000/api/promotions" \
+curl -X POST "http://45.76.94.219:3132/api/promotions" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -64,7 +64,7 @@ curl -X POST "http://localhost:3000/api/promotions" \
 ### Updating a Promotion's Certificate Conditions
 
 ```bash
-curl -X PATCH "http://localhost:3000/api/promotions/01J9W5S1AJ8D9X1T9Y8QZV4K2C" \
+curl -X PATCH "http://45.76.94.219:3132/api/promotions/01J9W5S1AJ8D9X1T9Y8QZV4K2C" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -77,7 +77,7 @@ curl -X PATCH "http://localhost:3000/api/promotions/01J9W5S1AJ8D9X1T9Y8QZV4K2C" 
 ```javascript
 // Create promotion with certificate conditions
 const createPromotionWithConditions = async (promotionData, token) => {
-  const response = await fetch('http://localhost:3000/api/promotions', {
+  const response = await fetch('http://45.76.94.219:3132/api/promotions', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -107,7 +107,7 @@ Chegirma boshqa amaldagi aksiyalar bilan qo'shilmaydi.`
 
 // Update promotion's certificate conditions
 const updatePromotionConditions = async (promotionId, conditions, token) => {
-  const response = await fetch(`http://localhost:3000/api/promotions/${promotionId}`, {
+  const response = await fetch(`http://45.76.94.219:3132/api/promotions/${promotionId}`, {
     method: 'PATCH',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -214,7 +214,7 @@ const PromotionCard = ({ promotion }) => {
 
 ## Swagger Documentation
 
-The new field is automatically documented in Swagger at `http://localhost:3000/docs` with:
+The new field is automatically documented in Swagger at `http://45.76.94.219:3132/docs` with:
 - Complete API schema
 - Example certificate conditions text
 - Field description in Uzbek

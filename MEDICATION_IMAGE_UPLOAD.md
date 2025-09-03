@@ -40,7 +40,7 @@ This feature adds image upload functionality to the medications module, allowing
 
 ## Swagger Documentation
 The API is fully documented with Swagger. Access the documentation at:
-- Development: `http://localhost:3000/docs`
+- Development: `http://45.76.94.219:3132/docs`
 
 ## Security Features
 - Admin role required for all image upload operations
@@ -53,7 +53,7 @@ The API is fully documented with Swagger. Access the documentation at:
 ### Using curl:
 ```bash
 # Create medication with image
-curl -X POST "http://localhost:3000/api/medications/with-image" \
+curl -X POST "http://45.76.94.219:3132/api/medications/with-image" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "name=Paracetamol" \
   -F "description=Pain reliever and fever reducer" \
@@ -64,7 +64,7 @@ curl -X POST "http://localhost:3000/api/medications/with-image" \
   -F "image=@/path/to/medication-image.jpg"
 
 # Update medication image
-curl -X PATCH "http://localhost:3000/api/medications/MEDICATION_ID/image" \
+curl -X PATCH "http://45.76.94.219:3132/api/medications/MEDICATION_ID/image" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "image=@/path/to/new-image.jpg"
 ```
@@ -81,7 +81,7 @@ formData.append('country', 'USA');
 formData.append('prescription_required', 'true');
 formData.append('image', imageFile);
 
-fetch('http://localhost:3000/api/medications/with-image', {
+fetch('http://45.76.94.219:3132/api/medications/with-image', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_JWT_TOKEN'
@@ -109,7 +109,7 @@ Successful responses return the created/updated medication object with the gener
   "composition": "Acetaminophen 500mg",
   "manufacturer": "Acme Pharma",
   "country": "USA",
-  "image_url": "http://localhost:3000/uploads/medications/medication-1234567890-123456789-paracetamol.jpg",
+  "image_url": "http://45.76.94.219:3132/uploads/medications/medication-1234567890-123456789-paracetamol.jpg",
   "prescription_required": true,
   "medicationCategoriesId": "01J9W5S1AJ8D9X1T9Y8QZV4K2C",
   "createdAt": "2024-01-01T00:00:00.000Z"

@@ -62,7 +62,7 @@ Automatically includes the `yandex_map_url` field through `PartialType(CreateCli
 
 #### Using JSON (POST /api/clinics):
 ```bash
-curl -X POST "http://localhost:3000/api/clinics" \
+curl -X POST "http://45.76.94.219:3132/api/clinics" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -90,7 +90,7 @@ curl -X POST "http://localhost:3000/api/clinics" \
 
 #### Using Multipart Form Data (POST /api/clinics/with-image):
 ```bash
-curl -X POST "http://localhost:3000/api/clinics/with-image" \
+curl -X POST "http://45.76.94.219:3132/api/clinics/with-image" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "name=Shifo Med Center" \
   -F "description=Zamonaviy tibbiy xizmatlar ko'rsatuvchi klinika" \
@@ -108,7 +108,7 @@ curl -X POST "http://localhost:3000/api/clinics/with-image" \
 ### Updating a Clinic's Yandex Maps URL
 
 ```bash
-curl -X PATCH "http://localhost:3000/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C" \
+curl -X PATCH "http://45.76.94.219:3132/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -121,7 +121,7 @@ curl -X PATCH "http://localhost:3000/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C" \
 ```javascript
 // Create clinic with Yandex Maps URL
 const createClinicWithMap = async (clinicData, token) => {
-  const response = await fetch('http://localhost:3000/api/clinics', {
+  const response = await fetch('http://45.76.94.219:3132/api/clinics', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -137,7 +137,7 @@ const createClinicWithMap = async (clinicData, token) => {
 
 // Update clinic's Yandex Maps URL
 const updateClinicMapUrl = async (clinicId, mapUrl, token) => {
-  const response = await fetch(`http://localhost:3000/api/clinics/${clinicId}`, {
+  const response = await fetch(`http://45.76.94.219:3132/api/clinics/${clinicId}`, {
     method: 'PATCH',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -218,7 +218,7 @@ const openInYandexMaps = (mapUrl) => {
 
 ## Swagger Documentation
 
-The new field is automatically documented in Swagger at `http://localhost:3000/docs` with:
+The new field is automatically documented in Swagger at `http://45.76.94.219:3132/docs` with:
 - Complete API schema
 - Example Yandex Maps URL
 - Field description

@@ -15,8 +15,8 @@
     "sat": "09:00-18:00",
     "sun": "10:00-16:00"
   },
-  "logo_url": "http://localhost:3000/uploads/clinics/clinic-1234567890-logo.png",
-  "image_url": "http://localhost:3000/uploads/clinics/additional-1234567890-image.jpg",
+  "logo_url": "http://45.76.94.219:3132/uploads/clinics/clinic-1234567890-logo.png",
+  "image_url": "http://45.76.94.219:3132/uploads/clinics/additional-1234567890-image.jpg",
   "yandex_map_url": "https://yandex.uz/maps/10335/tashkent/?ll=69.240562%2C41.299496&z=16&l=map&mode=search&text=Shifo%20Med%20Center&sll=69.240562%2C41.299496&sspn=0.001%2C0.001&ol=geo&oll=69.240562%2C41.299496",
   "type": "PRIVATE",
   "regionId": "01J9W5S1AJ8D9X1T9Y8QZV4K2C",
@@ -24,22 +24,22 @@
     {
       "name": "Tibbiy Markaz",
       "description": "Keng qamrovli tibbiy xizmatlar",
-      "logo_url": "http://localhost:3000/uploads/clinics/clinic-1234567891-logo.png",
-      "image_url": "http://localhost:3000/uploads/clinics/additional-1234567891-building.jpg",
+      "logo_url": "http://45.76.94.219:3132/uploads/clinics/clinic-1234567891-logo.png",
+      "image_url": "http://45.76.94.219:3132/uploads/clinics/additional-1234567891-building.jpg",
       "type": "PUBLIC"
     },
     {
       "name": "Stomatologik Klinika",
       "description": "Zamonaviy stomatologik xizmatlar",
-      "logo_url": "http://localhost:3000/uploads/clinics/clinic-1234567892-logo.png",
-      "image_url": "http://localhost:3000/uploads/clinics/additional-1234567892-interior.jpg",
+      "logo_url": "http://45.76.94.219:3132/uploads/clinics/clinic-1234567892-logo.png",
+      "image_url": "http://45.76.94.219:3132/uploads/clinics/additional-1234567892-interior.jpg",
       "type": "PRIVATE"
     },
     {
       "name": "Veterinariya Klinikasi",
       "description": "Hayvonlar uchun tibbiy xizmatlar",
-      "logo_url": "http://localhost:3000/uploads/clinics/clinic-1234567893-logo.png",
-      "image_url": "http://localhost:3000/uploads/clinics/additional-1234567893-animals.jpg",
+      "logo_url": "http://45.76.94.219:3132/uploads/clinics/clinic-1234567893-logo.png",
+      "image_url": "http://45.76.94.219:3132/uploads/clinics/additional-1234567893-animals.jpg",
       "type": "VETERINARY"
     }
   ],
@@ -63,7 +63,7 @@
     }
   },
   "curlExamples": {
-    "updateAdditionalImage": "curl -X PATCH \"http://localhost:3000/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C/additional-image\" -H \"Authorization: Bearer YOUR_JWT_TOKEN\" -F \"image=@/path/to/clinic-additional-image.jpg\"",
-    "deleteAdditionalImage": "curl -X DELETE \"http://localhost:3000/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C/additional-image\" -H \"Authorization: Bearer YOUR_JWT_TOKEN\""
+    "updateAdditionalImage": "curl -X PATCH \"http://45.76.94.219:3132/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C/additional-image\" -H \"Authorization: Bearer YOUR_JWT_TOKEN\" -F \"image=@/path/to/clinic-additional-image.jpg\"",
+    "deleteAdditionalImage": "curl -X DELETE \"http://45.76.94.219:3132/api/clinics/01J9W5S1AJ8D9X1T9Y8QZV4K2C/additional-image\" -H \"Authorization: Bearer YOUR_JWT_TOKEN\""
   }
 }
