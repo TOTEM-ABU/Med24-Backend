@@ -23,9 +23,15 @@ import { PrismaModule } from './tools/prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { ScraperModule } from './scraper/scraper.module';
 import { MulterModule } from './tools/multer/multer.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      serveRoot: "/uploads"
+    }),
     AuthModule,
     RegionModule,
     UserModule,
